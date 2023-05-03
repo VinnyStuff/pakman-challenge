@@ -6,10 +6,16 @@
 .formContainer{
     margin-left: 240px;
     border: 1px solid red;
+    max-width: 500px;
+    padding: 10px;
 }
 .namesContainer{
     display: flex;
 }
 .inputs{
     margin: 0 5px;
+    position: relative;
+}
+.telephonesContainer{
+    display: flex;
 }
