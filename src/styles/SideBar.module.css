@@ -1,0 +1,6 @@
+.sideBarContainer{
+    width: 240px;
+    box-shadow: 10px 10px 23px 0px rgba(0,0,0,0.13);
+    position: fixed;
+    background-color: red;
+}
