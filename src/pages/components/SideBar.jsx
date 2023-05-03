@@ -18,6 +18,11 @@ import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import Icon from '@mui/material/Icon'
 import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    themeSelect,
+    changeTheme,
+  } from '../../features/theme/themeSlice';
 
 export default function SideBar() {
 
@@ -33,6 +38,7 @@ export default function SideBar() {
 
 
     //script
+    const dispatch = useDispatch();
 
     const [currentTab, setCurrentTab] = useState();
     function handleTabClick(tab){
@@ -59,11 +65,11 @@ export default function SideBar() {
                     'aria-labelledby': 'basic-button',
                 }}
                 >
-                <MenuItem onClick={() => {handleClose()}}>
+                <MenuItem onClick={() => {dispatch(changeTheme()); handleClose()}}>
                     <ListItemIcon>
                         <DarkModeIcon/>
                     </ListItemIcon>
-                    <ListItemText>Appearance: Light</ListItemText>
+                    <ListItemText>Appearance: {useSelector(themeSelect) === 'dark' ?  'Dark mode': 'Light mode' }</ListItemText>
                 </MenuItem>
                 </Menu>
             </div>

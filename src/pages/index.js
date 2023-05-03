@@ -8,7 +8,6 @@ import SideBar from './components/SideBar'
 export default function Home() {
   return (
     <>
-      <SideBar/>
       <FormStep1/>
       <FormStep2/>
       <FormStep3/>
