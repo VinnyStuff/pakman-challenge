@@ -1,5 +1,6 @@
-import styles from '../../styles/FormStep3.module.css'
+import styles from '../../styles/FormSteps.module.css'
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 export default function FormStep3() {
     return (

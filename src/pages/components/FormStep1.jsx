@@ -1,53 +1,38 @@
-import styles from '../../styles/FormStep1.module.css'
+import styles from '../../styles/FormSteps.module.css'
 import TextField from '@mui/material/TextField';
-import FormProgressBar from './FormProgressBar';
 import Typography from '@mui/material/Typography';
 
 export default function FormStep1() {
     return (
       <>
-        <div className={styles.wrapper}>
-
-         
-
-          <div className={styles.formContainer}>
-            <div className={styles.titleContainer}>
-              <img src='/images/pakman-logo.fw.png' alt="Pakman-logo"/>
-
-            </div>
-
-
-          <FormProgressBar currentStep={1}/>
-
-            <div className={styles.namesContainer}>
+        <div className={styles.formContainer}>
+          <div className={styles.inputContainer}>
+            <div className={styles.inputs}>
+                <Typography variant='subtitle1'>Nome</Typography>
+                <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
+              </div>
               <div className={styles.inputs}>
-                  <Typography variant='subtitle1'>Nome</Typography>
-                  <TextField size="small" id="outlined-basic" variant="outlined"/>
-                </div>
-                <div className={styles.inputs}>
-                  <Typography variant='subtitle1'>Sobrenome</Typography>
-                  <TextField size="small" id="outlined-basic" variant="outlined" />
-                </div>
-            </div>
+                <Typography variant='subtitle1'>Sobrenome</Typography>
+                <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
+              </div>
+          </div>
 
+          <div className={styles.inputContainer}>
             <div className={styles.inputs}>
               <Typography variant='subtitle1'>E-mail</Typography>
               <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
             </div>
+          </div>
 
-            <div className={styles.telephonesContainer}>
-              <div className={styles.inputs}>
-                <Typography variant='subtitle1'>Telefone 1</Typography>
-                <TextField size="small" id="outlined-basic" variant="outlined"/>
-              </div>
-              <div className={styles.inputs}>
-                <Typography variant='subtitle1'>Telefone 2</Typography>
-                <TextField size="small" id="outlined-basic" variant="outlined"/>
-              </div>
+          <div className={styles.inputContainer}>
+            <div className={styles.inputs}>
+              <Typography variant='subtitle1'>Seu telefone</Typography>
+              <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
             </div>
-
-              
-              
+            <div className={styles.inputs}>
+              <Typography variant='subtitle1'>Outro telefone</Typography>
+              <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
+            </div>
           </div>
         </div>
       </>

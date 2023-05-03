@@ -1,0 +1,16 @@
+.formContainer{
+    width: 100%;
+    position: relative;
+}
+.namesContainer{
+    display: flex;
+}
+.inputs{
+    position: relative;
+    width: 100%; 
+    padding: 0 8px;
+}
+.inputContainer{
+    display: flex;
+    width: 100%;
+}

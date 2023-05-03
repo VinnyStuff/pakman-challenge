@@ -13,7 +13,7 @@ export default function FormProgressBar({currentStep}) {
     return (
       <>
          <div className={styles.fromProgressBarContainer}>
-            <Stepper activeStep={currentStep - 1} alternativeLabel>
+            <Stepper activeStep={currentStep} alternativeLabel>
                 {steps.map((label) => (
                 <Step key={label}>
                     <StepLabel>{label}</StepLabel>
