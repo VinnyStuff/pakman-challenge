@@ -1,0 +1,15 @@
+.wrapper{
+    margin: 0 auto;
+    width: max-content;
+    border: 1px solid purple;
+}
+.formContainer{
+    margin-left: 240px;
+    border: 1px solid red;
+}
+.namesContainer{
+    display: flex;
+}
+.inputs{
+    margin: 0 5px;
+}

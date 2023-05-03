@@ -5,7 +5,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
-import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -18,6 +17,7 @@ import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import Icon from '@mui/material/Icon'
 import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import Divider from '@mui/material/Divider';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     themeSelect,
@@ -53,7 +53,7 @@ export default function SideBar() {
                 <MenuIcon sx={{ height: "26px", width: "26px" }} />
                 </IconButton>
                 <div className={styles.logoContainer}>
-                    <img src='/images/pakman-logo-light-mode.fw.png' alt="Pakman-logo" width={'100%'}/>
+                    <img src={useSelector(themeSelect) === 'dark' ?  '/images/pakman-logo-dark-mode.fw.png': '/images/pakman-logo-light-mode.fw.png'} alt="Pakman-logo" width={'100%'}  />
                 </div>
 
                 <Menu
@@ -84,6 +84,10 @@ export default function SideBar() {
                     <Typography sx={{fontWeight: currentTab  === 'lista-de-clientes' ? 'bold' : 'normal', whiteSpace: 'nowrap'}}>Lista de Clientes</Typography>
                     <div className={styles.overlay}></div>
                 </div>
+            </div>
+            <div className={styles.clientsQuickView}>
+                <Divider sx={{mt: '10px'}}/>
+
             </div>
        </Paper>
       </>

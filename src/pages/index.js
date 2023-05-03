@@ -9,9 +9,9 @@ export default function Home() {
   return (
     <>
       <FormStep1/>
-      <FormStep2/>
+{/*       <FormStep2/>
       <FormStep3/>
-      <FormComplete/>
+      <FormComplete/> */}
     </>
   );
 }

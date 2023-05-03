@@ -17,6 +17,9 @@ const [selectTheme, setSelectTheme] = useState('light')
 
   const theme = createTheme({
     palette: {
+      primary: {
+        main: '#EF4B4B'
+      },
       mode: selectTheme,
     }
   });
