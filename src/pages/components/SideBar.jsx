@@ -24,6 +24,13 @@ import {
     changeTheme,
   } from '../../features/theme/themeSlice';
 
+import Box from '@mui/material/Box';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
 export default function SideBar() {
 
     //Mui material scripts:
@@ -35,6 +42,7 @@ export default function SideBar() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const [value, setValue] = useState(0);
 
 
     //script
@@ -47,49 +55,63 @@ export default function SideBar() {
 
     return (
       <>
-       <Paper className={styles.sideBarContainer} sx={{borderRadius: '0'}}>
-            <div className={styles.MenuContainer}>
-                <IconButton type="button" sx={{ p: "10px", mr: '10px' }}  onClick={handleClick}>
-                <MenuIcon sx={{ height: "26px", width: "26px" }} />
-                </IconButton>
-                <div className={styles.logoContainer}>
-                    <img src={useSelector(themeSelect) === 'dark' ?  '/images/pakman-logo-dark-mode.fw.png': '/images/pakman-logo-light-mode.fw.png'} alt="Pakman-logo" height={'100%'}  />
-                </div>
+        <Paper className={styles.sideBarContainer} sx={{borderRadius: '0'}}>
+                <div className={styles.MenuContainer}>
+                    <IconButton type="button" sx={{ p: "10px", mr: '10px' }}  onClick={handleClick}>
+                    <MenuIcon sx={{ height: "26px", width: "26px" }} />
+                    </IconButton>
+                    <div className={styles.logoContainer}>
+                        <img src={useSelector(themeSelect) === 'dark' ?  '/images/pakman-logo-dark-mode.fw.png': '/images/pakman-logo-light-mode.fw.png'} alt="Pakman-logo" height={'100%'}  />
+                    </div>
 
-                <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
+                    <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                    >
+                    <MenuItem onClick={() => {dispatch(changeTheme()); handleClose()}}>
+                        <ListItemIcon>
+                            <DarkModeIcon/>
+                        </ListItemIcon>
+                        <ListItemText>Appearance: {useSelector(themeSelect) === 'dark' ?  'Dark mode': 'Light mode' }</ListItemText>
+                    </MenuItem>
+                    </Menu>
+                </div>
+                <div className={styles.tabsContainer}>
+                    <div className={`${styles.tab} ${currentTab === 'novo-cliente' ? styles.tabActive : ''}`} onClick={() => handleTabClick('novo-cliente')}>
+                        <Icon component={currentTab === 'novo-cliente' ? PlaylistAddCircleIcon : PlaylistAddOutlinedIcon} sx={{mr: '12px'}}/>
+                        <Typography sx={{fontWeight: currentTab  === 'novo-cliente' ? 'bold' : 'normal', whiteSpace: 'nowrap'}}>Novo Cliente</Typography>
+                        <div className={styles.overlay}></div>
+                    </div>
+                    <div className={`${styles.tab} ${currentTab === 'lista-de-clientes' ? styles.tabActive : ''}`} onClick={() => handleTabClick('lista-de-clientes')}>
+                        <Icon component={currentTab === 'lista-de-clientes' ? ViewListIcon : ViewListOutlinedIcon} sx={{mr: '12px'}}/>
+                        <Typography sx={{fontWeight: currentTab  === 'lista-de-clientes' ? 'bold' : 'normal', whiteSpace: 'nowrap'}}>Lista de Clientes</Typography>
+                        <div className={styles.overlay}></div>
+                    </div>
+                </div>
+                <div className={styles.clientsQuickView}>
+                    <Divider sx={{mt: '10px'}}/>
+
+                </div>
+        </Paper>
+
+        <Paper className={styles.bottomBarMobile}>
+            <Divider/>
+            <BottomNavigation
+                showLabels
+                value={value}
+                onChange={(event, newValue) => {
+                setValue(newValue);
                 }}
-                >
-                <MenuItem onClick={() => {dispatch(changeTheme()); handleClose()}}>
-                    <ListItemIcon>
-                        <DarkModeIcon/>
-                    </ListItemIcon>
-                    <ListItemText>Appearance: {useSelector(themeSelect) === 'dark' ?  'Dark mode': 'Light mode' }</ListItemText>
-                </MenuItem>
-                </Menu>
-            </div>
-            <div className={styles.tabsContainer}>
-                <div className={`${styles.tab} ${currentTab === 'novo-cliente' ? styles.tabActive : ''}`} onClick={() => handleTabClick('novo-cliente')}>
-                    <Icon component={currentTab === 'novo-cliente' ? PlaylistAddCircleIcon : PlaylistAddOutlinedIcon} sx={{mr: '12px'}}/>
-                    <Typography sx={{fontWeight: currentTab  === 'novo-cliente' ? 'bold' : 'normal', whiteSpace: 'nowrap'}}>Novo Cliente</Typography>
-                    <div className={styles.overlay}></div>
-                </div>
-                <div className={`${styles.tab} ${currentTab === 'lista-de-clientes' ? styles.tabActive : ''}`} onClick={() => handleTabClick('lista-de-clientes')}>
-                    <Icon component={currentTab === 'lista-de-clientes' ? ViewListIcon : ViewListOutlinedIcon} sx={{mr: '12px'}}/>
-                    <Typography sx={{fontWeight: currentTab  === 'lista-de-clientes' ? 'bold' : 'normal', whiteSpace: 'nowrap'}}>Lista de Clientes</Typography>
-                    <div className={styles.overlay}></div>
-                </div>
-            </div>
-            <div className={styles.clientsQuickView}>
-                <Divider sx={{mt: '10px'}}/>
-
-            </div>
-       </Paper>
+            >
+                <BottomNavigationAction label="Novo Cliente" icon={<PlaylistAddOutlinedIcon />} />
+                <BottomNavigationAction label="Lista de clientes" icon={<ViewListOutlinedIcon />} />
+            </BottomNavigation>
+        </Paper>
       </>
     );
 }
