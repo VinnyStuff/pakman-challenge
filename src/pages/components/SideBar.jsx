@@ -43,29 +43,48 @@ export default function SideBar() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const [value, setValue] = useState(0);
-
+    const [value, setValue] = useState('');
 
     //script
-    const router = useRouter()
     const dispatch = useDispatch();
 
-    const [currentTab, setCurrentTab] = useState();
+    const [currentTab, setCurrentTab] = useState(); //novo-cliente or lista-de-clientes
     function handleTabClick(tab){
         setCurrentTab(tab);
         router.push(`/${tab}`);
     }
 
+    //router configs
+    const router = useRouter()
+    if(typeof window !== 'undefined'){
+
+        console.log('a');
+
+        const path = window.location.pathname;
+
+        useEffect(() => { 
+            if (path === '/novo-cliente' || path === '/anime-weekly/novo-cliente') {
+                setCurrentTab('novo-cliente');
+                setValue(0) //bottom bar mobile
+            } 
+            else if(path === '/lista-de-clientes' || path === '/anime-weekly/lista-de-clientes'){
+                setCurrentTab('lista-de-clientes');
+                setValue(1) //bottom bar mobile
+            }
+            console.log('b');
+        }, [path]);
+    }
+
     return (
-      <>
+    <>
         <Paper className={styles.sideBarContainer} sx={{borderRadius: '0'}}>
                 <div className={styles.MenuContainer}>
                     <IconButton type="button" sx={{ p: "10px", mr: '10px' }}  onClick={handleClick}>
                     <MenuIcon sx={{ height: "26px", width: "26px" }} />
                     </IconButton>
                     <div className={styles.logoContainer}>
-                       {/*  <img className={styles.logo} src={useSelector(themeSelect) === 'dark' ?  '' : ''} alt="Pakman-logo" /> */}
-                   </div>
+                    {/*  <img className={styles.logo} src={useSelector(themeSelect) === 'dark' ?  '' : ''} alt="Pakman-logo" /> */}
+                </div>
 
                     <Menu
                     id="basic-menu"
@@ -111,11 +130,11 @@ export default function SideBar() {
                 setValue(newValue);
                 }}
             >
-                <BottomNavigationAction label="Novo Cliente" icon={<PlaylistAddOutlinedIcon />} />
-                <BottomNavigationAction label="Lista de clientes" icon={<ViewListOutlinedIcon />} />
+                <BottomNavigationAction label="Novo Cliente" icon={<PlaylistAddOutlinedIcon />} onClick={() => handleTabClick('novo-cliente')}/>
+                <BottomNavigationAction label="Lista de clientes" icon={<ViewListOutlinedIcon />} onClick={() => handleTabClick('lista-de-clientes')}/>
             </BottomNavigation>
         </Paper>
-      </>
+    </>
     );
 }
   

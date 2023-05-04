@@ -2,12 +2,20 @@
     margin-left: 240px;
     padding: 0 25px;
     margin-top: 100px;
+    white-space: nowrap;
 }
-.customerParameters{
+.titlesContainer{
+    padding: 8px 0;
+    margin-right: 56px;
+}
+.titlesContainer div{
+    padding-left: 12px;
+}
+.customerParametersContainer, .titlesContainer{
     display: flex;
     overflow: hidden;
 }
-.customerParameters div{
+.customerParametersContainer div{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -41,5 +49,33 @@
 @media only screen and (max-width: 890px) {
     .customerListContainer{
         margin-left: 0;
+    }
+    .locationContainer{
+        display: inherit !important;
+    }
+}
+@media only screen and (max-width: 1280px) {
+    .emailContainer{
+        display: none !important;
+    }
+}
+@media only screen and (max-width: 1150px) {
+    .telephoneContainer{
+        display: none !important;
+    }
+}
+@media only screen and (max-width: 990px) {
+    .locationContainer{
+        display: none !important;
+    }
+}
+@media only screen and (max-width: 750px) {
+    .locationContainer{
+        display: none !important;
+    }
+}
+@media only screen and (max-width: 555px) {
+    .cpfContainer{
+        display: none !important;
     }
 }

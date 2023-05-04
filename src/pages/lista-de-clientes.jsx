@@ -30,8 +30,7 @@ export default function CustomerList() {
   return (
     <>
       <div className={styles.customerListContainer}>
-
-        <div className={styles.customerParameters}>
+        <div className={styles.titlesContainer}>
           <div className={styles.nameContainer}>
             <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Nome</Typography>
           </div>
@@ -49,6 +48,9 @@ export default function CustomerList() {
           </div>
         </div>
         
+        <Client/>
+        <Client/>
+        <Client/>
         <Client/>
       </div>
     </>
@@ -80,20 +82,20 @@ function Client(){
   return (
     <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`}}>
       <CardContent sx={{display: 'flex', height: '45px', p: '0', mr: '56px'}}>
-        <div className={styles.customerParameters} style={{ borderBottom: `1px solid ${dividerColor}` }}>
-          <div className={styles.nameContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
+        <div className={styles.customerParametersContainer}>
+          <div className={styles.nameContainer}>
             <Typography variant='subtitle1'>Vinnycios Medeiros de Almeida</Typography>
           </div>
-          <div className={styles.cpfContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
+          <div className={styles.cpfContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>155.155.155-24</Typography>
           </div>
-          <div className={styles.locationContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
+          <div className={styles.locationContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>Rio Grande do Norte</Typography>
           </div>
-          <div className={styles.telephoneContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>(11) 9812241-95</Typography>
+          <div className={styles.telephoneContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
+            <Typography variant='subtitle1'>(11) 98185-4195</Typography>
           </div>
-          <div className={styles.emailContainer}>
+          <div className={styles.emailContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, excepturi.@gmail,com</Typography>
           </div>
         </div>
@@ -110,11 +112,10 @@ function Client(){
       </ExpandMore>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent sx={{ borderTop: `1px solid ${dividerColor}`, whiteSpace: 'normal'}}>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-            aside for 10 minutes.
+            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10 minutes.
           </Typography>
           <Typography paragraph>
             Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
