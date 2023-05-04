@@ -5,10 +5,24 @@ import Typography from '@mui/material/Typography';
 export default function FormStep3() {
     return (
       <>
-         <div className='border-solid border-2 border-zinc-600	'>
-            <TextField  id="outlined-basic" label="Data de Nascimento" variant="outlined"/>
-            <TextField  id="outlined-basic" label="CPF" variant="outlined"/>
-            <TextField  id="outlined-basic" label="Rensa Mensal" variant="outlined"/>
+        <div className={styles.formContainer}>
+          <div className={styles.inputContainer}>
+            <div className={styles.inputs}>
+                <Typography variant='subtitle1'>Data de Nascimento</Typography>
+                <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
+              </div>
+          </div>
+
+          <div className={styles.inputContainer}>
+            <div className={styles.inputs}>
+              <Typography variant='subtitle1'>CPF</Typography>
+              <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
+            </div>
+            <div className={styles.inputs}>
+              <Typography variant='subtitle1'>Renda Mensal</Typography>
+              <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
+            </div>
+          </div>
         </div>
       </>
     );

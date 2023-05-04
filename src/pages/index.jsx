@@ -3,67 +3,101 @@ import FormStep1 from './components/FormStep1'
 import FormStep2 from './components/FormStep2'
 import FormStep3 from './components/FormStep3'
 import FormComplete from './components/FormComplete'
-import SideBar from './components/SideBar'
-import styles from '../styles/FormNewClient.module.css'
+import styles from '../styles/FormNewClient.module.css' //formsNewClient.module.css
 import FormProgressBar from './components/FormProgressBar';
 import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import AddIcon from '@mui/icons-material/Add';
+
 
 export default function Home() {
 
   const [formStepIndex, setFormStepIndex] = useState(0)
-  function handleButtonFormClick(index){
-    setFormStepIndex(formStepIndex + index);
+  const [formComplete, setFormComplete] = useState(false);
+  function handleButtonFormClick(event){
+    if(event === 'next'){
+      setFormStepIndex(formStepIndex + 1);
+    }
+    else if (event === 'back'){
+      setFormStepIndex(formStepIndex - 1);
+    }
+    else if (event === 'reset'){
+      setFormComplete(false);
+      setFormStepIndex(0);
+    }
   }
+  useEffect(() => {
+    console.log(formComplete);
+  }, [formComplete]);
 
   return (
     <>
       <div className={styles.wrapper}>
-        <div className={styles.formNewClientContainer}>
+        <Card className={styles.formNewClientContainer}>
           <div className={styles.titleContainer}>
             <div className={styles.logoContainer}>
               <img className={styles.logo} src='/images/pakman-logo.fw.png' alt="Pakman-logo"/>
             </div>
-            <Typography variant="h4" fontWeight={'bold'}>Crie um novo cadastro</Typography>
+            <Typography variant="h4" fontWeight={'bold'}>Cadastre o novo cliente</Typography>
             <Typography variant="subtitle" color='text.secondary'>preencha os dados do cliente neste formulário</Typography>
           </div>
 
           <FormProgressBar currentStep={formStepIndex}/>
 
           <div className={styles.form}>
-            {formStepIndex === 0 ? (
+            { formComplete ? (
               <>
-                <FormStep1/>
+                <FormComplete/>
               </>
-            ): formStepIndex === 1 ?  (
+            ) : 
               <>
-                 <FormStep2/>
+                { formStepIndex === 0 ? (
+                  <>
+                    <FormStep1/>
+                  </>
+                ): formStepIndex === 1 ?  (
+                  <>
+                    <FormStep2/>
+                  </>
+                ): formStepIndex === 2 ?(
+                  <>
+                    <FormStep3/>
+                  </>
+                ): null}
               </>
-            ): formStepIndex === 2 ?(
-              <>
-                <FormStep3/>
-              </>
-            ): null}
+            }
           </div>
-          <div className={styles.formButtons}>
-            {formStepIndex === 2 ? (
+          <div className={styles.buttonsContainer}>
+            { formComplete ? (
+            <> 
+              <div className={styles.formCompleteButtons}>
+                <Button variant="outlined" startIcon={<ViewListIcon/>} sx={{mx: '5px'}} onClick={() => console.log('ver a lista de clientes')}>Ver a lista de clientes</Button>
+                <Button variant="contained" startIcon={<AddIcon/>} sx={{mx: '5px'}} onClick={() => {handleButtonFormClick('reset')}}>Adicione um novo cliente</Button>
+              </div>
+            </>
+            ) : 
               <>
-                <Button variant="contained" startIcon={<SaveAltIcon/>} sx={{mx: '5px'}}>Salvar</Button>
-
-                <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(-1)} disabled={formStepIndex === 0}>Voltar</Button>
-                <Button variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(+1)} disabled={formStepIndex === 2}>Avançar</Button>
+                <div className={styles.formStepsButtons}>
+                  <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick('back')} disabled={formStepIndex === 0}>Voltar</Button>
+                  {formStepIndex === 2 ? (
+                    <>
+                      <Button variant="contained" startIcon={<SaveAltIcon/>} sx={{mx: '5px'}} onClick={() => {setFormComplete(true); handleButtonFormClick('next')}}>Salvar</Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick('next')}>Avançar</Button>
+                    </>
+                  )}
+                </div>
               </>
-            ) :  (
-              <>
-                <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(-1)} disabled={formStepIndex === 0}>Voltar</Button>
-                <Button variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(+1)} disabled={formStepIndex === 2}>Avançar</Button>
-              </>
-            )}
+            }
           </div>
-        </div>
+        </Card>
       </div>
     </>
   );

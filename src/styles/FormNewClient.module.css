@@ -6,17 +6,20 @@
 
 .formNewClientContainer{
     width: 100vw;
-    max-width: 550px;
+    max-width: 600px;
     margin-left: 240px;
     position: relative;
+    padding: 20px 5px;
+    
 }
 
 .form{
     padding: 0 8px;
+    height: 210px;
 }
 
 .titleContainer{
-    width: max-content;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
 }
@@ -24,7 +27,7 @@
 .logoContainer{
     position: relative;
     height: 20vh;
-    width: max-content;
+    width: 100%;
     margin: 0 auto; 
     margin-bottom: 8px;
 }
@@ -33,14 +36,25 @@
     height: 100%;
 }
 
-.formButtons{
+.buttonsContainer{
     width: max-content;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-@media only screen and (max-width: 830px) {
+@media only screen and (max-width: 890px) {
     .formNewClientContainer{
         margin-left: 0;
     }
 }
+@media only screen and (max-width: 560px) {
+    .formCompleteButtons{
+        display: flex;
+        flex-direction: column;
+    }
+    .formCompleteButtons button{
+        margin-bottom: 8px !important;
+    }
+}
+
+

@@ -1,0 +1,10 @@
+.formCompleteContainer{
+    height: 100%;
+    text-align: center;
+}
+.iconContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6px;
+}

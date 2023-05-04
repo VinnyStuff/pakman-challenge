@@ -1,6 +1,7 @@
 import styles from '../../styles/FormSteps.module.css'
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import NumberFormat from 'react-number-format';
 import Autocomplete from '@mui/material/Autocomplete';
 
 export default function FormStep2() {
@@ -37,7 +38,7 @@ export default function FormStep2() {
 
   return (
     <>
-        <div className={styles.formContainer}>
+      <div className={styles.formContainer}>
         <div className={styles.inputContainer}>
           <div className={styles.inputs}>
               <Typography variant='subtitle1'>CEP</Typography>
@@ -83,4 +84,4 @@ export default function FormStep2() {
     </>
   );
 }
-  
+
