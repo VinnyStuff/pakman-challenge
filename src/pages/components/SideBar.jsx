@@ -19,6 +19,7 @@ import ViewListOutlinedIcon from '@mui/icons-material/ViewListOutlined';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import Divider from '@mui/material/Divider';
 import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from "next/router";
 import {
     themeSelect,
     changeTheme,
@@ -46,11 +47,13 @@ export default function SideBar() {
 
 
     //script
+    const router = useRouter()
     const dispatch = useDispatch();
 
     const [currentTab, setCurrentTab] = useState();
     function handleTabClick(tab){
         setCurrentTab(tab);
+        router.push(`/${tab}`);
     }
 
     return (
