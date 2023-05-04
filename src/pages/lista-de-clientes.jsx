@@ -25,11 +25,29 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export default function Home() {
+export default function CustomerList() {
 
   return (
     <>
       <div className={styles.customerListContainer}>
+
+        <div className={styles.customerParameters}>
+          <div className={styles.nameContainer}>
+            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Nome</Typography>
+          </div>
+          <div className={styles.cpfContainer}>
+            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>CPF</Typography>
+          </div>
+          <div className={styles.locationContainer}>
+            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Localização</Typography>
+          </div>
+          <div className={styles.telephoneContainer}>
+            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Telefone</Typography>
+          </div>
+          <div className={styles.emailContainer}>
+            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>E-mail</Typography>
+          </div>
+        </div>
         
         <Client/>
       </div>
@@ -57,11 +75,25 @@ function Client(){
   };
 
   return (
-    <Card sx={{position: 'relative', mx: '20px'}}>
+    <Card sx={{position: 'relative'}}>
       <CardContent sx={{display: 'flex', height: '50px', p: '0'}}>
-        <Box sx={{background: 'red', py: '15px'}}>
-          bla
-        </Box>
+        <div className={styles.customerParameters}>
+          <div className={styles.nameContainer}>
+            <Typography variant='subtitle1'>Vinnycios Medeiros de Almeida</Typography>
+          </div>
+          <div className={styles.cpfContainer}>
+            <Typography variant='subtitle1'>155.155.155-24</Typography>
+          </div>
+          <div className={styles.locationContainer}>
+            <Typography variant='subtitle1'>Rio Grande do Norte</Typography>
+          </div>
+          <div className={styles.telephoneContainer}>
+            <Typography variant='subtitle1'>(11) 9812241-95</Typography>
+          </div>
+          <div className={styles.emailContainer}>
+            <Typography variant='subtitle1'>vinnyciosblablabla@gmail.com</Typography>
+          </div>
+        </div>
       </CardContent>
 
       <ExpandMore

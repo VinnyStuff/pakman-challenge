@@ -1,3 +1,29 @@
 .customerListContainer{
     margin-left: 240px;
+    padding: 0 25px;
+    margin-top: 100px;
+}
+.customerParameters{
+    display: flex;
+    overflow: hidden;
+}
+.customerParameters div{
+    border: 1px solid red;
+    white-space: nowrap;
+}
+
+.nameContainer{
+    width: 200px;
+}
+.cpfContainer{
+    width: 100px;
+}
+.locationContainer{
+    width: 150px;
+}
+.telephoneContainer{
+    width: 150px;
+}
+.emailContainer{
+    
 }
