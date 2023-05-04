@@ -58,17 +58,11 @@
         visibility: hidden;
     }
 }
-@media only screen and (max-width: 705px) {
+@media only screen and (max-width: 945px) {
     .telephoneContainer{
-        visibility: hidden !important;
+        visibility: hidden;
     }
 }
-@media only screen and (max-width: 555px) {
-    .cpfContainer{
-        visibility: hidden !important;
-    }
-}
-
 
 
 @media only screen and (max-width: 890px) {
@@ -80,6 +74,16 @@
     }
     .telephoneContainer{
         visibility: visible;
+    }
+}
+@media only screen and (max-width: 705px) {
+    .telephoneContainer{
+        visibility: hidden;
+    }
+}
+@media only screen and (max-width: 555px) {
+    .cpfContainer{
+        visibility: hidden;
     }
 }
 
