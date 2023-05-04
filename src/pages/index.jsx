@@ -13,6 +13,10 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import AddIcon from '@mui/icons-material/Add';
+import { useSelector} from 'react-redux';
+import {
+    themeSelect,
+  } from '../features/theme/themeSlice';
 
 
 export default function Home() {
@@ -41,10 +45,19 @@ export default function Home() {
         <Card className={styles.formNewClientContainer}>
           <div className={styles.titleContainer}>
             <div className={styles.logoContainer}>
-              <img className={styles.logo} src='/images/pakman-logo.fw.png' alt="Pakman-logo"/>
+              <img className={styles.logo} src={useSelector(themeSelect) === 'dark' ?  '/images/pakman-logo-dark-mode.fw.png': '/images/pakman-logo-light-mode.fw.png'} alt="Pakman-logo" height={'100%'}  />
             </div>
-            <Typography variant="h4" fontWeight={'bold'}>Cadastre o novo cliente</Typography>
-            <Typography variant="subtitle" color='text.secondary'>preencha os dados do cliente neste formulário</Typography>
+            { formComplete ? (
+              <>
+                <Typography variant="h4" fontWeight={'bold'}>Cadastro concluído</Typography>
+                <Typography variant="subtitle" color='text.secondary'>Escolha uma opção abaixo:</Typography>
+              </>
+            ) : 
+              <>
+                <Typography variant="h4" fontWeight={'bold'}>Cadastre o novo cliente</Typography>
+                <Typography variant="subtitle" color='text.secondary'>preencha os dados do cliente neste formulário</Typography>
+              </>
+            }
           </div>
 
           <FormProgressBar currentStep={formStepIndex}/>

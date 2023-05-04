@@ -1,16 +1,18 @@
 .wrapper{
     margin: 0 auto;
     width: max-content;
-    margin-top: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .formNewClientContainer{
     width: 100vw;
     max-width: 600px;
-    margin-left: 240px;
-    position: relative;
     padding: 20px 5px;
-    
+    padding-top: 0;
+    height: max-content;
+    position: relative;
 }
 
 .form{
@@ -20,20 +22,20 @@
 
 .titleContainer{
     width: 100%;
-    margin: 0 auto;
     text-align: center;
 }
 
 .logoContainer{
     position: relative;
-    height: 20vh;
+    height: max-content;
     width: 100%;
     margin: 0 auto; 
-    margin-bottom: 8px;
+    padding: 30px 30px;
 }
 
 .logo{
-    height: 100%;
+    object-fit:scale-down;
+    width: 100%;
 }
 
 .buttonsContainer{
@@ -41,7 +43,11 @@
     margin: 0 auto;
     margin-top: 10px;
 }
-
+@media only screen and (max-width: 1800px) {
+    .formNewClientContainer{
+        margin-left: 240px;
+    }
+}
 @media only screen and (max-width: 890px) {
     .formNewClientContainer{
         margin-left: 0;

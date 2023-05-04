@@ -49,11 +49,11 @@ export default function SideBar() {
       <>
        <Paper className={styles.sideBarContainer} sx={{borderRadius: '0'}}>
             <div className={styles.MenuContainer}>
-                <IconButton type="button" sx={{ p: "10px", mr: '14px' }}  onClick={handleClick}>
+                <IconButton type="button" sx={{ p: "10px", mr: '10px' }}  onClick={handleClick}>
                 <MenuIcon sx={{ height: "26px", width: "26px" }} />
                 </IconButton>
                 <div className={styles.logoContainer}>
-                    <img src={useSelector(themeSelect) === 'dark' ?  '/images/pakman-logo-dark-mode.fw.png': '/images/pakman-logo-light-mode.fw.png'} alt="Pakman-logo" width={'100%'}  />
+                    <img src={useSelector(themeSelect) === 'dark' ?  '/images/pakman-logo-dark-mode.fw.png': '/images/pakman-logo-light-mode.fw.png'} alt="Pakman-logo" height={'100%'}  />
                 </div>
 
                 <Menu
