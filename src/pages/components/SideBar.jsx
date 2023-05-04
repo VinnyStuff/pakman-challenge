@@ -83,7 +83,7 @@ export default function SideBar() {
                     <MenuIcon sx={{ height: "26px", width: "26px" }} />
                     </IconButton>
                     <div className={styles.logoContainer}>
-                    {/*  <img className={styles.logo} src={useSelector(themeSelect) === 'dark' ?  '' : ''} alt="Pakman-logo" /> */}
+                     <img className={styles.logo}/>
                 </div>
 
                     <Menu

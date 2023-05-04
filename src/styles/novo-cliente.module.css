@@ -51,6 +51,10 @@
 @media only screen and (max-width: 890px) {
     .formNewClientContainer{
         margin-left: 0;
+        margin-top: 80px;
+    }
+    .wrapper{
+        align-items: start;
     }
 }
 @media only screen and (max-width: 560px) {

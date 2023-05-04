@@ -6,7 +6,7 @@
 }
 .titlesContainer{
     padding: 8px 0;
-    margin-right: 56px;
+    margin-right: 52px;
 }
 .titlesContainer div{
     padding-left: 12px;
@@ -46,36 +46,49 @@
     flex-grow: 1;
 }
 
-@media only screen and (max-width: 890px) {
-    .customerListContainer{
-        margin-left: 0;
-    }
-    .locationContainer{
-        display: inherit !important;
-    }
-}
+
+
 @media only screen and (max-width: 1280px) {
     .emailContainer{
-        display: none !important;
+        visibility: hidden;
     }
 }
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: 1135px) {
+    .locationContainer{
+        visibility: hidden;
+    }
+}
+@media only screen and (max-width: 705px) {
     .telephoneContainer{
-        display: none !important;
-    }
-}
-@media only screen and (max-width: 990px) {
-    .locationContainer{
-        display: none !important;
-    }
-}
-@media only screen and (max-width: 750px) {
-    .locationContainer{
-        display: none !important;
+        visibility: hidden !important;
     }
 }
 @media only screen and (max-width: 555px) {
     .cpfContainer{
-        display: none !important;
+        visibility: hidden !important;
     }
+}
+
+
+
+@media only screen and (max-width: 890px) {
+    .customerListContainer{
+        margin-top: 80px;
+    }
+    .customerListContainer{
+        margin-left: 0;
+    }
+    .telephoneContainer{
+        visibility: visible;
+    }
+}
+
+.cardExtendContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.cardExtendContainer div{
+    width: max-content;
+    flex-grow: 1;
 }

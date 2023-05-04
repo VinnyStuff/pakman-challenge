@@ -45,7 +45,7 @@ export default function Home() {
         <Card className={styles.formNewClientContainer}>
           <div className={styles.titleContainer}>
             <div className={styles.logoContainer}>
-              {/* <img className={styles.logo} src={useSelector(themeSelect) === 'dark' ?  '' : ''} alt="Pakman-logo" /> */}
+              <img className={styles.logo}/>
             </div>
             { formComplete ? (
               <>
