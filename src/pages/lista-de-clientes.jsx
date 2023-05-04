@@ -49,9 +49,6 @@ export default function CustomerList() {
         </div>
         
         <Client/>
-        <Client/>
-        <Client/>
-        <Client/>
       </div>
     </>
   );
@@ -80,7 +77,7 @@ function Client(){
   const dividerColor = theme.palette.divider;
 
   return (
-    <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`}}>
+    <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '0'}}>
       <CardContent sx={{display: 'flex', height: '45px', p: '0', mr: '52px'}}>
         <div className={styles.customerParametersContainer}>
           <div className={styles.nameContainer}>
