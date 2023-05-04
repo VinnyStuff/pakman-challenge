@@ -87,6 +87,6 @@
         transform: translate(-50%, -50%);
     }
     .bottomBarMobile{
-        display: block;
+        display : block;
     }
 }

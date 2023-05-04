@@ -9,7 +9,7 @@ import SideBar from './SideBar'
 
 export default function Layout({ children }) {
 
-const [selectTheme, setSelectTheme] = useState('light')
+  const [selectTheme, setSelectTheme] = useState('light')
   const themeSlice = useSelector(themeSelect) //pass this directly in mode dont work
   useEffect(() => {
     setSelectTheme(themeSlice);

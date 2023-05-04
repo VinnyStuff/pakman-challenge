@@ -61,8 +61,8 @@ export default function SideBar() {
                     <MenuIcon sx={{ height: "26px", width: "26px" }} />
                     </IconButton>
                     <div className={styles.logoContainer}>
-                        <img src={useSelector(themeSelect) === 'dark' ?  '/images/pakman-logo-dark-mode.fw.png': '/images/pakman-logo-light-mode.fw.png'} alt="Pakman-logo" height={'100%'}  />
-                    </div>
+                       {/*  <img className={styles.logo} src={useSelector(themeSelect) === 'dark' ?  '' : ''} alt="Pakman-logo" /> */}
+                   </div>
 
                     <Menu
                     id="basic-menu"
