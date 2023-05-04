@@ -8,22 +8,38 @@
     overflow: hidden;
 }
 .customerParameters div{
-    border: 1px solid red;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    padding: 0 12px;
+    
+    display: flex;
+    align-items: center;
 }
 
 .nameContainer{
-    width: 200px;
+    min-width: 320px;
+    width: 320px;
 }
 .cpfContainer{
-    width: 100px;
-}
-.locationContainer{
+    min-width: 150px;
     width: 150px;
 }
+.locationContainer{
+    min-width: 200px;
+    width: 200px;
+}
 .telephoneContainer{
+    min-width: 150px;
     width: 150px;
 }
 .emailContainer{
-    
+    flex-grow: 1;
+}
+
+@media only screen and (max-width: 890px) {
+    .customerListContainer{
+        margin-left: 0;
+    }
 }

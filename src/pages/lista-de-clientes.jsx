@@ -39,7 +39,7 @@ export default function CustomerList() {
             <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>CPF</Typography>
           </div>
           <div className={styles.locationContainer}>
-            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Localização</Typography>
+            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Localização (Estado)</Typography>
           </div>
           <div className={styles.telephoneContainer}>
             <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Telefone</Typography>
@@ -68,30 +68,33 @@ const ExpandMore = styled((props) => {
 }));
 
 function Client(){
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const theme = useTheme();
+  const dividerColor = theme.palette.divider;
+
   return (
-    <Card sx={{position: 'relative'}}>
-      <CardContent sx={{display: 'flex', height: '50px', p: '0'}}>
-        <div className={styles.customerParameters}>
-          <div className={styles.nameContainer}>
+    <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`}}>
+      <CardContent sx={{display: 'flex', height: '45px', p: '0', mr: '56px'}}>
+        <div className={styles.customerParameters} style={{ borderBottom: `1px solid ${dividerColor}` }}>
+          <div className={styles.nameContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>Vinnycios Medeiros de Almeida</Typography>
           </div>
-          <div className={styles.cpfContainer}>
+          <div className={styles.cpfContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>155.155.155-24</Typography>
           </div>
-          <div className={styles.locationContainer}>
+          <div className={styles.locationContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>Rio Grande do Norte</Typography>
           </div>
-          <div className={styles.telephoneContainer}>
+          <div className={styles.telephoneContainer} style={{ borderRight: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>(11) 9812241-95</Typography>
           </div>
           <div className={styles.emailContainer}>
-            <Typography variant='subtitle1'>vinnyciosblablabla@gmail.com</Typography>
+            <Typography variant='subtitle1'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, excepturi.@gmail,com</Typography>
           </div>
         </div>
       </CardContent>
