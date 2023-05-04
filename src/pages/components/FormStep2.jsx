@@ -1,7 +1,6 @@
 import styles from '../../styles/FormSteps.module.css'
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import NumberFormat from 'react-number-format';
 import Autocomplete from '@mui/material/Autocomplete';
 
 export default function FormStep2() {
