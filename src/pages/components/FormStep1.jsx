@@ -33,15 +33,56 @@ export default function FormStep1() {
   }
 
 
+
+  const [formValues, setFormValues] = useState({
+    nome: '',
+    sobrenome: '',
+    email: '',
+    telefone1: '',
+    telefone2: '',
+  });
+  const [touchedFields, setTouchedFields] = useState({});
+
+  const handleBlur = (event) => {
+    const { id, value } = event.target;
+    const newFormValues = { ...formValues, [id]: value };
+    setFormValues(newFormValues);
+    setTouchedFields({ ...touchedFields, [id]: true });
+  };
+
   return (
     <>
+      <TextField
+        size="small"
+        id="nome"
+        label="Nome"
+        variant="outlined"
+        fullWidth
+        value={formValues.name}
+        onChange={(e) => setFormValues({ ...formValues, name: e.target.value })}
+        onBlur={handleBlur}
+      />
+      {/* <TextField
+        size="small"
+        id="email"
+        label="Email"
+        variant="outlined"
+        fullWidth
+        value={formValues.email}
+        onChange={(e) => setFormValues({ ...formValues, email: e.target.value })}
+        onBlur={handleBlur}
+      /> */}
       <div className={styles.formContainer}>
         <div className={styles.inputContainer}>
           <div className={styles.inputs}>
               <Typography variant='subtitle1'>*Nome</Typography> 
               <TextField size="small" id="outlined-basic" variant="outlined" fullWidth value={nomeInput} onChange={(e) => setNomeInput(e.target.value)} onBlur={handleNomeInputBlur}/>
               <div className={styles.emptyMessageContainer}> 
-                <Typography variant='subtitle2'>O campo "Nome" é obrigatório</Typography>
+                { touchedFields.nome && formValues.nome === '' ? (
+                  <>
+                    <Typography variant='subtitle2'>O campo "Nome" é obrigatório</Typography>
+                  </>
+                ):null} 
               </div>
             </div>
             <div className={styles.inputs}>
