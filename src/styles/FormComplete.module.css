@@ -1,6 +1,6 @@
 .formCompleteContainer{
-    height: 100%;
     text-align: center;
+    background-color: red;
 }
 .iconContainer{
     display: flex;

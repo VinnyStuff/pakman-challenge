@@ -57,17 +57,14 @@ export default function SideBar() {
     //router configs
     const router = useRouter()
     if(typeof window !== 'undefined'){
-
-        console.log('a');
-
         const path = window.location.pathname;
 
         useEffect(() => { 
-            if (path === '/novo-cliente' || path === '/anime-weekly/novo-cliente') {
+            if (path === '/novo-cliente' || path === '/pakman-challenge/novo-cliente') {
                 setCurrentTab('novo-cliente');
                 setValue(0) //bottom bar mobile
             } 
-            else if(path === '/lista-de-clientes' || path === '/anime-weekly/lista-de-clientes'){
+            else if(path === '/lista-de-clientes' || path === '/pakman-challenge/lista-de-clientes'){
                 setCurrentTab('lista-de-clientes');
                 setValue(1) //bottom bar mobile
             }

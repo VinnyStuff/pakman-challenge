@@ -16,8 +16,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { useRouter } from "next/router";
 import { useSelector} from 'react-redux';
 import {
-    themeSelect,
-  } from '../features/theme/themeSlice';
+  themeSelect,
+} from '../features/theme/themeSlice';
+import {
+  newClientForms,
+} from '../features/newClientForms/newClientFormsSlice';
 
 
 export default function Home() {
@@ -37,9 +40,8 @@ export default function Home() {
       setFormStepIndex(0);
     }
   }
-  useEffect(() => {
-    console.log(formComplete);
-  }, [formComplete]);
+
+  console.log(useSelector(newClientForms).formStep3.isFilled)
 
   return (
     <>
@@ -73,15 +75,15 @@ export default function Home() {
               <>
                 { formStepIndex === 0 ? (
                   <>
-                    <FormStep1/>
+                    <FormStep1/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
                   </>
                 ): formStepIndex === 1 ?  (
-                  <>
-                    <FormStep2/>
+                  <> 
+                    <FormStep2/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
                   </>
                 ): formStepIndex === 2 ?(
                   <>
-                    <FormStep3/>
+                    <FormStep3/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
                   </>
                 ): null}
               </>
