@@ -8,7 +8,12 @@
 .inputs{
     position: relative;
     width: 100%; 
-    padding: 0 8px;
+    padding: 0 5px;
+    margin-bottom: 22px;
+}
+.emptyMessageContainer{
+    margin-top: 3px;
+    position: absolute;
 }
 .inputContainer{
     display: flex;
