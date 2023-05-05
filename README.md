@@ -41,3 +41,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 @media only screen and (max-width: 830px) {
 
 }
+
+
+eu fiz que os dados no formulario fossem salvos com redux para mostrar que consigo usar o redux sem dificuldade, porem eu não faria desse jeito em um projeto pessoal por que o processo fica mais longo
+
+inves de deixar cada step em 1 componente só que seria o mais facil de manipular cada input eu coloquei cada um dentro um componente para mostrar que consigo manipular componentes e usa os dados de cada um livremente
