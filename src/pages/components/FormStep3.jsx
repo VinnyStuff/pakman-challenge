@@ -44,7 +44,7 @@ export default function FormStep3() {
   };
 
   useEffect(() => {
-/*     if(rendaMensal.length > 0 && cpf.length > 0 && dataDeNascimento.length > 0){
+/*if(rendaMensal.length > 0 && cpf.length > 0 && dataDeNascimento.length > 0){
       dispatch(updateRendaMensal(rendaMensal.length > 0 && cpf.length > 0 && dataDeNascimento.length > 0));
     } */
     dispatch(isFormStep3Filled(rendaMensal.length > 0 && cpf.length > 0 && dataDeNascimento.length > 0));

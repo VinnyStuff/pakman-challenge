@@ -23,25 +23,17 @@ import {
 } from '../features/newClientForms/newClientFormsSlice';
 
 
-export default function Home() {
+export default function NewClient() {
+
+  const canSavesForm = useSelector(newClientForms).formStep3.isFilled //if step3 is filled
+  
   const router = useRouter()
 
   const [formStepIndex, setFormStepIndex] = useState(0)
-  const [formComplete, setFormComplete] = useState(false);
   function handleButtonFormClick(event){
-    if(event === 'next'){
-      setFormStepIndex(formStepIndex + 1);
-    }
-    else if (event === 'back'){
-      setFormStepIndex(formStepIndex - 1);
-    }
-    else if (event === 'reset'){
-      setFormComplete(false);
-      setFormStepIndex(0);
-    }
+    setFormStepIndex(formStepIndex + (event));
+    //formStepIndex === 3 when forms ends
   }
-
-  console.log(useSelector(newClientForms).formStep3.isFilled)
 
   return (
     <>
@@ -51,7 +43,7 @@ export default function Home() {
             <div className={styles.logoContainer}>
               <img className={styles.logo}/>
             </div>
-            { formComplete ? (
+            { formStepIndex == 3 ? (
               <>
                 <Typography variant="h4" fontWeight={'bold'}>Cadastro concluído</Typography>
                 <Typography variant="subtitle" color='text.secondary'>Escolha uma opção abaixo:</Typography>
@@ -67,47 +59,43 @@ export default function Home() {
           <FormProgressBar currentStep={formStepIndex}/>
 
           <div className={styles.form}>
-            { formComplete ? (
+            { formStepIndex === 0 ? (
+              <>
+                <FormStep1/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
+              </>
+            ): formStepIndex === 1 ?  (
+              <> 
+                <FormStep2/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
+              </>
+            ): formStepIndex === 2 ?(
+              <>
+                <FormStep3/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
+              </>
+            ): formStepIndex === 3 ?
               <>
                 <FormComplete/>
               </>
-            ) : 
-              <>
-                { formStepIndex === 0 ? (
-                  <>
-                    <FormStep1/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
-                  </>
-                ): formStepIndex === 1 ?  (
-                  <> 
-                    <FormStep2/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
-                  </>
-                ): formStepIndex === 2 ?(
-                  <>
-                    <FormStep3/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
-                  </>
-                ): null}
-              </>
-            }
+            : null}
           </div>
           <div className={styles.buttonsContainer}>
-            { formComplete ? (
+            { formStepIndex === 3 ? (
             <> 
               <div className={styles.formCompleteButtons}>
                 <Button variant="outlined" startIcon={<ViewListIcon/>} sx={{mx: '5px'}} onClick={() => router.push('/lista-de-clientes')}>Ver a lista de clientes</Button>
-                <Button variant="contained" startIcon={<AddIcon/>} sx={{mx: '5px'}} onClick={() => {handleButtonFormClick('reset')}}>Adicione um novo cliente</Button>
+                <Button variant="contained" startIcon={<AddIcon/>} sx={{mx: '5px'}} onClick={() => {handleButtonFormClick(-formStepIndex)}}>Adicione um novo cliente</Button>
               </div>
             </>
             ) : 
               <>
                 <div className={styles.formStepsButtons}>
-                  <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick('back')} disabled={formStepIndex === 0}>Voltar</Button>
+                  <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(-1)} disabled={formStepIndex === 0}>Voltar</Button>
                   {formStepIndex === 2 ? (
                     <>
-                      <Button variant="contained" startIcon={<SaveAltIcon/>} sx={{mx: '5px'}} onClick={() => {setFormComplete(true); handleButtonFormClick('next')}}>Salvar</Button>
+                      <Button disabled={canSavesForm === false} variant="contained" startIcon={<SaveAltIcon/>} sx={{mx: '5px'}} onClick={() => {handleButtonFormClick(+1)}}>Salvar</Button>
                     </>
                   ) : (
                     <>
-                      <Button variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick('next')}>Avançar</Button>
+                      <Button variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(+1)}>Avançar</Button>
                     </>
                   )}
                 </div>
