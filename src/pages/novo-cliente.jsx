@@ -13,6 +13,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import AddIcon from '@mui/icons-material/Add';
+import { useRouter } from "next/router";
 import { useSelector} from 'react-redux';
 import {
     themeSelect,
@@ -20,6 +21,7 @@ import {
 
 
 export default function Home() {
+  const router = useRouter()
 
   const [formStepIndex, setFormStepIndex] = useState(0)
   const [formComplete, setFormComplete] = useState(false);
@@ -89,7 +91,7 @@ export default function Home() {
             { formComplete ? (
             <> 
               <div className={styles.formCompleteButtons}>
-                <Button variant="outlined" startIcon={<ViewListIcon/>} sx={{mx: '5px'}} onClick={() => console.log('ver a lista de clientes')}>Ver a lista de clientes</Button>
+                <Button variant="outlined" startIcon={<ViewListIcon/>} sx={{mx: '5px'}} onClick={() => router.push('/lista-de-clientes')}>Ver a lista de clientes</Button>
                 <Button variant="contained" startIcon={<AddIcon/>} sx={{mx: '5px'}} onClick={() => {handleButtonFormClick('reset')}}>Adicione um novo cliente</Button>
               </div>
             </>

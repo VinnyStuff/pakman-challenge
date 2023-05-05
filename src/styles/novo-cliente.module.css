@@ -17,7 +17,8 @@
 
 .form{
     padding: 0 8px;
-    height: 275px;
+    min-height: 305px;
+    height: max-content;
 }
 
 .titleContainer{

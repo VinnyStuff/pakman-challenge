@@ -9,13 +9,13 @@
     position: relative;
     width: 100%; 
     padding: 0 5px;
-    margin-bottom: 22px;
 }
 .emptyMessageContainer{
-    margin-top: 3px;
+    margin-top: 2px;
     position: absolute;
 }
 .inputContainer{
     display: flex;
     width: 100%;
+    margin-bottom: 22px;
 }
