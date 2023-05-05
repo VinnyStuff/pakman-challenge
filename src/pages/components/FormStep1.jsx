@@ -2,6 +2,14 @@ import React, {useState, useEffect} from 'react'
 import styles from '../../styles/FormSteps.module.css'
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  updateNome,
+  updateSobrenome,
+  updateEmail,
+  updateTelefone1,
+  updateTelefone2,
+} from '../../features/newClientForms/newClientFormsSlice'
 
 function formatPhoneNumber(phoneNumberString) {
   const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
@@ -26,6 +34,21 @@ export default function FormStep1() {
   };
 
   //--
+  const dispatch = useDispatch();
+
+  const [nome, setNome] = useState('');
+  const [sobrenome, setSobrenome] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefone1, setTelefone1] = useState('');
+  const [telefone2, setTelefone2] = useState('');
+  
+  useEffect(() => {
+    dispatch(updateNome(nome))
+    dispatch(updateSobrenome(sobrenome))
+    dispatch(updateEmail(email))
+    dispatch(updateTelefone1(telefone1))
+    dispatch(updateTelefone2(telefone2))
+  }, [nome, sobrenome, email, telefone1, telefone2]);
 
   return (
     <>
@@ -33,7 +56,7 @@ export default function FormStep1() {
         <div className={styles.inputContainer}>
           <div className={styles.inputs}>
               <Typography variant='subtitle1'>*Nome</Typography> 
-              <TextField size="small" id="outlined-basic" variant="outlined" fullWidth/>
+              <TextField size="small" id="outlined-basic" variant="outlined" fullWidth value={nome} required onChange={(e) => setNome(e.target.value)}/>
               <div className={styles.emptyMessageContainer}> 
                 {/* <Typography variant='subtitle2'>O campo "Nome" é obrigatório</Typography> */}
               </div>

@@ -6,7 +6,7 @@ const initialState = {
         sobrenome: '',
         email: '',
         telefone1: '',
-        telefone2: ''
+        telefone1: ''
     },
     formStep2: {
         endereco1: {
@@ -43,6 +43,21 @@ export const newClientFormsSlice = createSlice({
     updateNome: (state, action) =>{
         state.formStep1.nome = action.payload;
     },
+    updateSobrenome: (state, action) =>{
+        state.formStep1.sobrenome = action.payload;
+    },
+    updateEmail: (state, action) =>{
+        state.formStep1.email = action.payload;
+    },    
+    updateTelefone1: (state, action) =>{
+        state.formStep1.telefone1 = action.payload;
+    },    
+    updateTelefone2: (state, action) =>{
+        state.formStep1.telefone2 = action.payload;
+    },    
+
+
+    
 
     updateDataDeNascimento: (state, action) =>{
         state.formStep3.dataDeNascimento = action.payload;
@@ -60,7 +75,7 @@ export const newClientFormsSlice = createSlice({
 })
 
 export const { 
-    updateNome, 
+    updateNome, updateSobrenome, updateEmail, updateTelefone1, updateTelefone2,
 
     updateDataDeNascimento, updateCpf, updateRendaMensal, isFormStep3Filled } = newClientFormsSlice.actions;
 

@@ -48,6 +48,12 @@ export default function SideBar() {
     //script
     const dispatch = useDispatch();
 
+    const [logo, setLogo] = useState('https://i.imgur.com/6P1sMC4.png');
+    const theme = useSelector(themeSelect);
+    useEffect(() => {
+        setLogo(theme === 'dark'?  '/images/pakman-logo-dark-mode.png': '/images/pakman-logo-light-mode.png');
+    }, [theme]);
+
     const [currentTab, setCurrentTab] = useState(); //novo-cliente or lista-de-clientes
     function handleTabClick(tab){
         setCurrentTab(tab);
@@ -80,7 +86,7 @@ export default function SideBar() {
                     <MenuIcon sx={{ height: "26px", width: "26px" }} />
                     </IconButton>
                     <div className={styles.logoContainer}>
-                     <img className={styles.logo}/>
+                     <img className={styles.logo} src={logo} alt='logo' height={'100%'}/>
                 </div>
 
                     <Menu
