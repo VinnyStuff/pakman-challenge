@@ -35,6 +35,16 @@ export default function NewClient() {
     //formStepIndex === 3 when forms ends
   }
 
+  const handleNextButtonPressed = () => {
+    setFormStepIndex(formStepIndex + 1)
+  }
+  const handleBackButtonPressed = () => {
+    setFormStepIndex(formStepIndex - 1)
+  }
+  const handleResetButtonPressed = () => {
+    setFormStepIndex(0)
+  }
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -61,23 +71,23 @@ export default function NewClient() {
           <div className={styles.form}>
             { formStepIndex === 0 ? (
               <>
-                <FormStep1/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
+                <FormStep1 handleNextButtonPressed={handleNextButtonPressed}/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
               </>
             ): formStepIndex === 1 ?  (
               <> 
-                <FormStep2/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
+                <FormStep2 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
               </>
             ): formStepIndex === 2 ?(
               <>
-                <FormStep3/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
+                <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
               </>
             ): formStepIndex === 3 ?
               <>
-                <FormComplete/>
+                <FormComplete handleResetButtonPressed={handleResetButtonPressed}/>
               </>
             : null}
           </div>
-          <div className={styles.buttonsContainer}>
+          {/* <div className={styles.buttonsContainer}>
             { formStepIndex === 3 ? (
             <> 
               <div className={styles.formCompleteButtons}>
@@ -101,7 +111,7 @@ export default function NewClient() {
                 </div>
               </>
             }
-          </div>
+          </div> */}
         </Card>
       </div>
     </>

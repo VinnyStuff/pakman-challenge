@@ -1,14 +1,13 @@
 .formContainer{
     width: 100%;
     position: relative;
-}
-.namesContainer{
-    display: flex;
+    height: 315px;
 }
 .inputs{
     position: relative;
     width: 100%; 
     padding: 0 5px;
+    margin-bottom: 20px;
 }
 .emptyMessageContainer{
     margin-top: 2px;
@@ -17,5 +16,35 @@
 .inputContainer{
     display: flex;
     width: 100%;
-    margin-bottom: 22px;
+}
+.buttonsContainer{
+    margin: 0 auto;
+    width: max-content;
+}
+
+@media only screen and (max-width: 600px) {
+    .inputContainer{
+        display: inline
+    }
+    .formContainer{
+       height: max-content;
+    }
+    .iconContainer{
+        padding: 30px 0;
+    }
+    .buttonsContainer{
+        padding-top: 8px;
+    }
+}
+
+.addressContainer{
+    display: flex;
+    margin-bottom: 12px;
+}
+.iconContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }

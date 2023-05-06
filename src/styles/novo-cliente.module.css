@@ -4,6 +4,7 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
+
 }
 
 .formNewClientContainer{
@@ -13,11 +14,11 @@
     padding-top: 0;
     height: max-content;
     position: relative;
+    margin-bottom: 75px;
 }
 
 .form{
     padding: 0 8px;
-    min-height: 335px;
     height: max-content;
 }
 
@@ -52,7 +53,7 @@
 @media only screen and (max-width: 890px) {
     .formNewClientContainer{
         margin-left: 0;
-        margin-top: 80px;
+        margin-top: 66px;
     }
     .wrapper{
         align-items: start;
