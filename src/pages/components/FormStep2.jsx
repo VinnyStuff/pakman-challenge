@@ -7,41 +7,47 @@ import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-export default function FormStep2({handleNextButtonPressed, handleBackButtonPressed}) {
+export default function FormStep2({handleNextButtonPressed, handleBackButtonPressed, handleInputsValues}) {
 
   const [currentAddress, setCurrentAddress] = useState(1);
 
-  const [inputsAddress1Values, setInputsAddress1Values] = useState({
-    cep: '',
-    nomeDaRua: '',
-    numero: '',
-    complemento: '',
-    bairro: '',
-    estado: '',
-    cidade: '',
-  });
-  const [inputsAddress2Values, setInputsAddress2Values] = useState({
-    cep: '',
-    nomeDaRua: '',
-    numero: '',
-    complemento: '',
-    bairro: '',
-    estado: '',
-    cidade: '',
+  const [inputsAddressValues, setInputsAddressValues] = useState({
+    endereço_1:{
+      cep: '',
+      nomeDaRua: '',
+      numero: '',
+      complemento: '', /* opcional */
+      bairro: '',
+      estado: '',
+      cidade: '',
+    },
+    endereço_2:{ /* opcional  ↓ */
+      cep: '',
+      nomeDaRua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      estado: '',
+      cidade: '',
+    },
   });
 
-  const handleAdress1InputsValues = value => {
-    setInputsAddress1Values(value)
+  const handleAdress1InputsValues = (value) => {
+    setInputsAddressValues({...inputsAddressValues, 
+      endereço_1: value,
+    })
   }
-  const handleAdress2InputsValues = value => {
-    setInputsAddress2Values(value)
+  const handleAdress2InputsValues = (value) => {
+    setInputsAddressValues({...inputsAddressValues, 
+      endereço_2: value,
+    })
   }
 
   const [canClickNextButton, setCanClickNextButton] = useState(false);
 
   useEffect(() =>{
-    setCanClickNextButton(inputsAddress1Values.cep.length > 0 && inputsAddress1Values.nomeDaRua.length > 0 && inputsAddress1Values.numero.length > 0 && inputsAddress1Values.bairro.length > 0 && inputsAddress1Values.estado.length > 0 && inputsAddress1Values.cidade.length > 0)
-  }, [inputsAddress1Values, inputsAddress2Values]);
+    setCanClickNextButton(inputsAddressValues.endereço_1.cep.length > 0 && inputsAddressValues.endereço_1.nomeDaRua.length > 0 && inputsAddressValues.endereço_1.numero.length > 0 && inputsAddressValues.endereço_1.bairro.length > 0 && inputsAddressValues.endereço_1.estado.length > 0 && inputsAddressValues.endereço_1.cidade.length > 0)
+  }, [inputsAddressValues]);
 
 
   return (
@@ -63,13 +69,13 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
       </div>
       <div className={styles.buttonsContainer}>
         <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={handleBackButtonPressed}>Voltar</Button>
-        <Button disabled={!canClickNextButton} variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={handleNextButtonPressed}>Avançar</Button>
+        <Button disabled={!canClickNextButton} variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={() => {handleInputsValues(inputsAddressValues); handleNextButtonPressed()}}>Avançar</Button>
       </div>
     </>
   )
 }
 
-const CurrentForm = props => {
+function CurrentForm({handleValues}){
 
   const [inputsValue, setTnputsValue] = useState({
     cep: '',
@@ -82,7 +88,7 @@ const CurrentForm = props => {
   })
 
   useEffect(() =>{ 
-    props.handleValues(inputsValue);
+    handleValues(inputsValue);
   }, [inputsValue]);
 
   const states = [
@@ -130,7 +136,7 @@ const CurrentForm = props => {
 
       <div className={styles.inputContainer}>
         <div className={styles.inputs}>
-          <Typography variant='subtitle1'>8Número</Typography>
+          <Typography variant='subtitle1'>*Número</Typography>
           <TextField size="small" id="outlined-basic" variant="outlined" name='numero' fullWidth onChange={(e) =>  setTnputsValue({...inputsValue, numero: e.target.value})}/>
         </div>
         <div className={styles.inputs}>

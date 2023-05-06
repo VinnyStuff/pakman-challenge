@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 
 
-export default function FormStep3({handleNextButtonPressed, handleBackButtonPressed}) {
+export default function FormStep3({handleNextButtonPressed, handleBackButtonPressed, handleInputsValues}) {
 
   const [inputsValue, setTnputsValue] = useState({
     dataDeNascimento: '',
@@ -45,7 +45,7 @@ export default function FormStep3({handleNextButtonPressed, handleBackButtonPres
       </div>
       <div className={styles.buttonsContainer}>
         <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={handleBackButtonPressed}>Voltar</Button>
-        <Button disabled={!canClickNextButton} variant="contained" endIcon={<SaveAltIcon/>} sx={{mx: '5px'}} onClick={handleNextButtonPressed}>Salvar</Button>
+        <Button disabled={!canClickNextButton} variant="contained" endIcon={<SaveAltIcon/>} sx={{mx: '5px'}} onClick={() => {handleInputsValues(inputsValue); handleNextButtonPressed()}}>Salvar</Button>
       </div>
     </>
   );

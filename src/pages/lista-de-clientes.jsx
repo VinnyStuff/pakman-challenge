@@ -112,6 +112,7 @@ function Client(){
         <CardContent sx={{ borderTop: `1px solid ${dividerColor}`, whiteSpace: 'normal'}}>
           <div className={styles.cardExtendContainer}>
             <div className={styles.clientPersonalInformations}>
+              <Typography variant='subtitle1'>Dados pessoais: </Typography>
               <Typography variant='subtitle1'>Nome: </Typography>
               <Typography variant='subtitle1'>Email: </Typography>
               <Typography variant='subtitle1'>Telefone 1: </Typography>

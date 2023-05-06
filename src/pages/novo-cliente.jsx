@@ -25,7 +25,70 @@ export default function NewClient() {
     setFormStepIndex(0)
   }
 
-  const [step1InputsValue, setStep1InputsValue] = useState({});
+  const [inputsValues, setInputsValues] = useState({
+    dados_pessoais:{
+      nome: '',
+      sobrenome: '',
+      email: '',
+      telefone1: '',
+      telefone2: '', /* opcional */
+      dataDeNascimento: '',
+      cpf: '',
+      rendaMensal: '',
+    },
+    endereço_1:{
+      cep: '',
+      nomeDaRua: '',
+      numero: '',
+      complemento: '', /* opcional */
+      bairro: '',
+      estado: '',
+      cidade: '',
+    },
+    endereço_2:{ /* opcional */
+      cep: '',
+      nomeDaRua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      estado: '',
+      cidade: '',
+    },
+  });
+  
+  function handleInputsValues(value){
+    if (formStepIndex === 0){
+
+      
+
+      setInputsValues({...inputsValues, 
+        dados_pessoais: {
+          ...inputsValues.dados_pessoais,
+          nome: value.nome,
+          sobrenome: value.sobrenome,
+          email: value.email,
+          telefone1: value.telefone1,
+          telefone2: value.telefone2,
+        }
+      })
+    }
+    else if (formStepIndex === 1){
+     setInputsValues({...inputsValues, 
+        endereço_1: value.endereço_1,
+        endereço_2: value.endereço_2,
+      })
+    }
+    else if (formStepIndex === 2){
+      setInputsValues({...inputsValues, 
+        dados_pessoais: {
+          ...inputsValues.dados_pessoais,
+          dataDeNascimento: value.dataDeNascimento,
+          cpf: value.cpf,
+          rendaMensal: value.rendaMensal,
+        }
+      })
+    }
+  }
 
   return (
     <>
@@ -57,15 +120,15 @@ export default function NewClient() {
             { formStepIndex < 3 ? (
               <>
                 <div style={{display: formStepIndex === 0 ? 'inherit' : 'none'}}>
-                  <FormStep1 handleNextButtonPressed={handleNextButtonPressed}/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
+                  <FormStep1 handleNextButtonPressed={handleNextButtonPressed} handleInputsValues={handleInputsValues}/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
                 </div>
 
                 <div style={{display: formStepIndex === 1 ? 'inherit' : 'none'}}>
-                  <FormStep2 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
+                  <FormStep2 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
                 </div>
 
                 <div style={{display: formStepIndex === 2 ? 'inherit' : 'none'}}>
-                  <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
+                  <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
                 </div> 
               </>
             ) : 
