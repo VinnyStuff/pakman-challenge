@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, forwardRef, useRef, useImperativeHandle, createRef} from 'react'
 import styles from '../styles/lista-de-clientes.module.css'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -13,12 +13,13 @@ import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
 
 export default function CustomerList() {
-
   const [clients, setClients] = useState([]);
 
- 
-
   useEffect(() => {
+    setClients(getClients());
+  }, []);
+
+  function getClients(){
     const newClients = [];
 
     for (let key in localStorage) {
@@ -27,13 +28,21 @@ export default function CustomerList() {
       }
     }
 
-    setClients(newClients);
-  }, []);
+    return newClients;
+  }
 
+  const clientsRef = useRef({});
+  clients.forEach((_, i) => {
+    clientsRef.current[i] = createRef();
+  });
 
   return (
     <>
       <div className={styles.customerListContainer}>
+        <button onClick={() => {for (let i = 0; i < clients.length; i++) {
+                                  clientsRef.current[i].current.isChecked();
+                                }; 
+                                setClients(getClients())}}>bla</button>
         <div className={styles.titlesContainer}>
           <div className={styles.nameContainer}>
             <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Nome</Typography>
@@ -52,8 +61,8 @@ export default function CustomerList() {
           </div>
         </div>
         
-        {clients.map((client) =>(
-          <Client key={client.dados_pessoais.cpf} client={client}/>
+        {clients.map((client, index) =>(
+          <Client key={client.dados_pessoais.cpf} props={client}  ref={clientsRef.current[index]}/>
         ))}
       </div>
     </>
@@ -72,7 +81,8 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function Client({ client }){
+const Client = forwardRef(( props, ref ) => {
+  const client = props.props;
   const dados_pessoais = client.dados_pessoais;
   const endereços = [client.endereço_1, client.endereço_2];
 
@@ -85,14 +95,20 @@ function Client({ client }){
   const theme = useTheme();
   const dividerColor = theme.palette.divider;
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const handleCheckboxChange = (event) => {
     setChecked(event.target.checked);
-    console.log(event.target.checked);
   };
 
-  
+  useImperativeHandle(ref, () => ({
+    isChecked() {
+      if(checked){
+        console.log(dados_pessoais.cpf);
+        localStorage.removeItem(`cliente-${dados_pessoais.cpf}`)
+      }
+    }
+  }));
 
   return (
     <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '0'}}>
@@ -159,4 +175,4 @@ function Client({ client }){
       </Collapse>
     </Card>
   );
-}
+})
