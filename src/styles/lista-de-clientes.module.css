@@ -9,7 +9,7 @@
     margin-right: 52px;
 }
 .titlesContainer div{
-    padding-left: 12px;
+    padding-left: 64px;
 }
 .customerParametersContainer, .titlesContainer{
     display: flex;
@@ -93,6 +93,7 @@
     gap: 5px;
 }
 .cardExtendContainer div{
+    min-width: 300px;
     width: max-content;
     flex-grow: 1;
 }
