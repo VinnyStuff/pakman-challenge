@@ -13,17 +13,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Box from '@mui/material/Box'
 
 export default function NewClient() {
-  const [formStepIndex, setFormStepIndex] = useState(0)
 
-  const handleNextButtonPressed = () => {
-    setFormStepIndex(formStepIndex + 1)
-  }
-  const handleBackButtonPressed = () => {
-    setFormStepIndex(formStepIndex - 1)
-  }
-  const handleResetButtonPressed = () => {
-    setFormStepIndex(0)
-  }
+  const [formStepIndex, setFormStepIndex] = useState(0)
 
   const [inputsValues, setInputsValues] = useState({
     dados_pessoais:{
@@ -55,40 +46,62 @@ export default function NewClient() {
       cidade: '',
     },
   });
+  const [inputsValuesInitialState, setInputsValuesInitialState] = useState(inputsValues)
   
   function handleInputsValues(value){
     if (formStepIndex === 0){
-
-      
-
       setInputsValues({...inputsValues, 
         dados_pessoais: {
-          ...inputsValues.dados_pessoais,
-          nome: value.nome,
-          sobrenome: value.sobrenome,
-          email: value.email,
-          telefone1: value.telefone1,
-          telefone2: value.telefone2,
-        }
+        ...inputsValues.dados_pessoais,
+        nome: value.nome,
+        sobrenome: value.sobrenome,
+        email: value.email,
+        telefone1: value.telefone1,
+        telefone2: value.telefone2,
+      }
+    })
+  }
+  else if (formStepIndex === 1){
+    setInputsValues({...inputsValues, 
+      endereço_1: value.endereço_1,
+      endereço_2: value.endereço_2,
       })
     }
-    else if (formStepIndex === 1){
-     setInputsValues({...inputsValues, 
-        endereço_1: value.endereço_1,
-        endereço_2: value.endereço_2,
-      })
-    }
-    else if (formStepIndex === 2){
-      setInputsValues({...inputsValues, 
-        dados_pessoais: {
-          ...inputsValues.dados_pessoais,
-          dataDeNascimento: value.dataDeNascimento,
-          cpf: value.cpf,
-          rendaMensal: value.rendaMensal,
+  else if (formStepIndex === 2){
+    setInputsValues({...inputsValues, 
+      dados_pessoais: {
+        ...inputsValues.dados_pessoais,
+        dataDeNascimento: value.dataDeNascimento,
+        cpf: value.cpf,
+        rendaMensal: value.rendaMensal,
         }
       })
     }
   }
+
+  const handleNextButtonPressed = () => {
+    setFormStepIndex(formStepIndex + 1)
+  }
+  const handleBackButtonPressed = () => {
+    setFormStepIndex(formStepIndex - 1)
+  }
+  const handleResetButtonPressed = () => {
+    setInputsValues(inputsValuesInitialState);
+    setFormStepIndex(0)
+  }
+
+  useEffect(() =>{ 
+    if(formStepIndex === 3){ //forms ends
+      if (typeof window !== 'undefined' && window.localStorage) {
+        try {
+          localStorage.setItem(`cliente-${inputsValues.dados_pessoais.cpf}`, JSON.stringify(inputsValues))
+        }
+        catch(error){
+          console.error(error)
+        }
+      }
+    }
+  }, [formStepIndex]);
 
   return (
     <>

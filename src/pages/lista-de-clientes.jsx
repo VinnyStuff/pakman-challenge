@@ -1,31 +1,35 @@
 import React, {useState, useEffect} from 'react'
 import styles from '../styles/lista-de-clientes.module.css'
 import Typography from '@mui/material/Typography'
-import Paper from  '@mui/material/Paper'
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Box from '@mui/material/Box'
 import { useTheme } from "@mui/material/styles";
-import Divider from "@mui/material/Divider";
-import { Hidden } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
 
 export default function CustomerList() {
+
+  const [clients, setClients] = useState([]);
+
+ 
+
+  useEffect(() => {
+    const newClients = [];
+
+    for (let key in localStorage) {
+      if (key.includes("cliente")) {
+        newClients.push(JSON.parse(localStorage.getItem(key)));
+      }
+    }
+
+    setClients(newClients);
+  }, []);
+
 
   return (
     <>
@@ -48,7 +52,9 @@ export default function CustomerList() {
           </div>
         </div>
         
-        <Client/>
+        {clients.map((client) =>(
+          <Client key={client.dados_pessoais.cpf} client={client}/>
+        ))}
       </div>
     </>
   );
@@ -58,15 +64,18 @@ export default function CustomerList() {
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
+  })(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
 }));
 
-function Client(){
+function Client({ client }){
+  const dados_pessoais = client.dados_pessoais;
+  const endereços = [client.endereço_1, client.endereço_2];
+
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -76,24 +85,35 @@ function Client(){
   const theme = useTheme();
   const dividerColor = theme.palette.divider;
 
+  const [checked, setChecked] = useState(true);
+
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
+    console.log(event.target.checked);
+  };
+
+  
+
   return (
     <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '0'}}>
       <CardContent sx={{display: 'flex', height: '45px', p: '0', mr: '52px'}}>
+        <Checkbox sx={{mr: '5px', ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
+        <Divider orientation="vertical" variant="middle" flexItem />
         <div className={styles.customerParametersContainer}>
           <div className={styles.nameContainer}>
-            <Typography variant='subtitle1'>Vinnycios Medeiros de Almeida</Typography>
+            <Typography variant='subtitle1'>{dados_pessoais.nome}</Typography>
           </div>
           <div className={styles.cpfContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>155.155.155-24</Typography>
+            <Typography variant='subtitle1'>{dados_pessoais.cpf}</Typography>
           </div>
           <div className={styles.telephoneContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>(11) 98185-4195</Typography>
+            <Typography variant='subtitle1'>{dados_pessoais.telefone1}</Typography>
           </div>
           <div className={styles.locationContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>Rio Grande do Norte</Typography>
+            <Typography variant='subtitle1'>{endereços[0].estado}</Typography>
           </div>
           <div className={styles.emailContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, excepturi.@gmail,com</Typography>
+            <Typography variant='subtitle1'>{dados_pessoais.email}</Typography>
           </div>
         </div>
       </CardContent>
@@ -112,35 +132,28 @@ function Client(){
         <CardContent sx={{ borderTop: `1px solid ${dividerColor}`, whiteSpace: 'normal'}}>
           <div className={styles.cardExtendContainer}>
             <div className={styles.clientPersonalInformations}>
-              <Typography variant='subtitle1'>Dados pessoais: </Typography>
-              <Typography variant='subtitle1'>Nome: </Typography>
-              <Typography variant='subtitle1'>Email: </Typography>
-              <Typography variant='subtitle1'>Telefone 1: </Typography>
-              <Typography variant='subtitle1'>Telefone 2: </Typography>
-              <Typography variant='subtitle1'>Data de nascimento:</Typography>
-              <Typography variant='subtitle1'>CPF: </Typography>
-              <Typography variant='subtitle1'>Renda mensal: </Typography>
+              <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Dados pessoais: </Typography>
+              <Typography variant='subtitle1'>Nome: {dados_pessoais.nome}</Typography>
+              <Typography variant='subtitle1'>E-mail: {dados_pessoais.cpf}</Typography>
+              <Typography variant='subtitle1'>Telefone 1: {dados_pessoais.telefone1}</Typography>
+              <Typography variant='subtitle1'>Telefone 2: {dados_pessoais.telefone2}</Typography>
+              <Typography variant='subtitle1'>Data de nascimento: {dados_pessoais.dataDeNascimento}</Typography>
+              <Typography variant='subtitle1'>CPF: {dados_pessoais.cpf}</Typography>
+              <Typography variant='subtitle1'>Renda mensal: {dados_pessoais.rendaMensal}</Typography>
             </div>
-            <div className={styles.address0Container}>
-              <Typography variant='subtitle1'>Endereço 1: </Typography>
-              <Typography variant='subtitle1'>CEP: </Typography>
-              <Typography variant='subtitle1'>Nome da Rua: </Typography>
-              <Typography variant='subtitle1'>Número: </Typography>
-              <Typography variant='subtitle1'>Complemento: </Typography>
-              <Typography variant='subtitle1'>Bairro: </Typography>
-              <Typography variant='subtitle1'>Estado: </Typography>
-              <Typography variant='subtitle1'>Cidade: </Typography>
-            </div>
-            <div className={styles.address0Container}>
-              <Typography variant='subtitle1'>Endereço 2: </Typography>
-              <Typography variant='subtitle1'>CEP: </Typography>
-              <Typography variant='subtitle1'>Nome da Rua: </Typography>
-              <Typography variant='subtitle1'>Número: </Typography>
-              <Typography variant='subtitle1'>Complemento: </Typography>
-              <Typography variant='subtitle1'>Bairro: </Typography>
-              <Typography variant='subtitle1'>Estado: </Typography>
-              <Typography variant='subtitle1'>Cidade: </Typography>
-            </div>
+            
+            {endereços.map((endereço, index) => (
+              <div key={index}>
+                <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Endereço {index + 1}: </Typography>
+                <Typography variant='subtitle1'>CEP: {endereço.cep}</Typography>
+                <Typography variant='subtitle1'>Nome da Rua: {endereço.nomeDaRua}</Typography>
+                <Typography variant='subtitle1'>Número:{endereço.numero} </Typography>
+                <Typography variant='subtitle1'>Complemento: {endereço.complemento}</Typography>
+                <Typography variant='subtitle1'>Bairro: {endereço.bairro}</Typography>
+                <Typography variant='subtitle1'>Estado: {endereço.estado}</Typography>
+                <Typography variant='subtitle1'>Cidade: {endereço.cidade}</Typography>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Collapse>
