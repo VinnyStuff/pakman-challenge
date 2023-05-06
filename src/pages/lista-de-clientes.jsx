@@ -14,10 +14,11 @@ import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import { useRouter } from "next/router";
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
+import InfoIcon from '@mui/icons-material/Info';
+import Tooltip from '@mui/material/Tooltip';
+
 
 export default function CustomerList() {
   const router = useRouter();
@@ -71,9 +72,14 @@ export default function CustomerList() {
                     </IconButton>
                   </Paper>
                 </div>
-                <Button variant="contained" sx={{minWidth: '45px'}} onClick={() => {handleDeleteButton(); setClients(getClients())}}>
+                <Button variant="outlined" color="primary" sx={{minWidth: '45px', mr: '5px'}} onClick={() => {handleDeleteButton(); setClients(getClients())}}>
                   <DeleteIcon sx={{position: 'absolute', }}/>
                 </Button>
+                <Tooltip title="O botão de deletar apenas funciona quando possui algum cliente selecionado">
+                  <Button variant="text"  sx={{minWidth: '45px'}}>
+                    <InfoIcon sx={{position: 'absolute'}}  color="action"/>
+                  </Button>
+                </Tooltip>
               </div>
               <div className={styles.titleContainer}>
                 <div className={styles.nameContainer}>
@@ -136,6 +142,7 @@ const Client = forwardRef(( props, ref ) => {
 
   const theme = useTheme();
   const dividerColor = theme.palette.divider;
+  const test = theme.palette.primary.light;
 
   const [checked, setChecked] = useState(false);
 
@@ -153,8 +160,8 @@ const Client = forwardRef(( props, ref ) => {
 
   return (
     <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '-1px', boxShadow:'none'}} >
-      <CardContent sx={{display: 'flex', height: '45px', p: '0', mr: '52px'}}>
-        <Checkbox sx={{ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
+      <CardContent sx={{display: 'flex', height: '45px', p: '0', pr: '52px'}}>
+        <Checkbox  sx={{ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
         <div className={styles.customerParametersContainer}>
           <div className={styles.nameContainer}>
             <Typography variant='subtitle1'>{dados_pessoais.nome}</Typography>
