@@ -30,10 +30,6 @@ export default function NewClient() {
   const router = useRouter()
 
   const [formStepIndex, setFormStepIndex] = useState(0)
-  function handleButtonFormClick(event){
-    setFormStepIndex(formStepIndex + (event));
-    //formStepIndex === 3 when forms ends
-  }
 
   const handleNextButtonPressed = () => {
     setFormStepIndex(formStepIndex + 1)
@@ -49,69 +45,49 @@ export default function NewClient() {
     <>
       <div className={styles.wrapper}>
         <Card className={styles.formNewClientContainer}>
+
           <div className={styles.titleContainer}>
             <div className={styles.logoContainer}>
               <img className={styles.logo}/>
             </div>
-            { formStepIndex == 3 ? (
-              <>
-                <Typography variant="h4" fontWeight={'bold'}>Cadastro concluído</Typography>
-                <Typography variant="subtitle" color='text.secondary'>Escolha uma opção abaixo:</Typography>
-              </>
-            ) : 
+
+            { formStepIndex < 3 ? (
               <>
                 <Typography variant="h4" fontWeight={'bold'}>Cadastre o novo cliente</Typography>
                 <Typography variant="subtitle" color='text.secondary'>preencha os dados do cliente neste formulário</Typography>
               </>
+            ) : 
+              <>
+                <Typography variant="h4" fontWeight={'bold'}>Cadastro concluído</Typography>
+                <Typography variant="subtitle" color='text.secondary'>Escolha uma opção abaixo:</Typography>
+              </>
             }
+            
           </div>
 
           <FormProgressBar currentStep={formStepIndex}/>
 
           <div className={styles.form}>
-            { formStepIndex === 0 ? (
+            { formStepIndex < 3 ? (
               <>
-                <FormStep1 handleNextButtonPressed={handleNextButtonPressed}/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
+                <div style={{display: formStepIndex === 0 ? 'inherit' : 'none'}}>
+                  <FormStep1 handleNextButtonPressed={handleNextButtonPressed}/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
+                </div>
+
+                <div style={{display: formStepIndex === 1 ? 'inherit' : 'none'}}>
+                  <FormStep2 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
+                </div>
+
+                <div style={{display: formStepIndex === 2 ? 'inherit' : 'none'}}>
+                  <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
+                </div> 
               </>
-            ): formStepIndex === 1 ?  (
-              <> 
-                <FormStep2 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
-              </>
-            ): formStepIndex === 2 ?(
-              <>
-                <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed}/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
-              </>
-            ): formStepIndex === 3 ?
-              <>
-                <FormComplete handleResetButtonPressed={handleResetButtonPressed}/>
-              </>
-            : null}
-          </div>
-          {/* <div className={styles.buttonsContainer}>
-            { formStepIndex === 3 ? (
-            <> 
-              <div className={styles.formCompleteButtons}>
-                <Button variant="outlined" startIcon={<ViewListIcon/>} sx={{mx: '5px'}} onClick={() => router.push('/lista-de-clientes')}>Ver a lista de clientes</Button>
-                <Button variant="contained" startIcon={<AddIcon/>} sx={{mx: '5px'}} onClick={() => {handleButtonFormClick(-formStepIndex)}}>Adicione um novo cliente</Button>
-              </div>
-            </>
             ) : 
               <>
-                <div className={styles.formStepsButtons}>
-                  <Button variant="outlined" startIcon={<ArrowBackIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(-1)} disabled={formStepIndex === 0}>Voltar</Button>
-                  {formStepIndex === 2 ? (
-                    <>
-                      <Button disabled={canSavesForm === false} variant="contained" startIcon={<SaveAltIcon/>} sx={{mx: '5px'}} onClick={() => {handleButtonFormClick(+1)}}>Salvar</Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button variant="contained" endIcon={<ArrowForwardIcon/>} sx={{mx: '5px'}} onClick={() => handleButtonFormClick(+1)}>Avançar</Button>
-                    </>
-                  )}
-                </div>
+                <FormComplete handleResetButtonPressed={handleResetButtonPressed}/> {/* botões: ver a lista de clientes e adicione um novo cliente */}
               </>
-            }
-          </div> */}
+            }     
+          </div>
         </Card>
       </div>
     </>
