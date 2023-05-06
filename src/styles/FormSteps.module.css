@@ -37,6 +37,9 @@
     .buttonsContainer{
         padding-top: 8px;
     }
+    .buttonsContainer > button{
+        height: max-content !important;
+    }
     .buttonsContainer > button:first-of-type{
         margin-bottom: 12px !important;
     }

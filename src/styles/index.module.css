@@ -1,0 +1,39 @@
+.wrapper{
+    margin: 0 auto;
+    width: max-content;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.welcomeContainer{
+    width: 100vw;
+    max-width: 600px;
+    padding: 20px 5px;
+    padding-top: 0;
+    height: max-content;
+    position: relative;
+    margin-bottom: 75px;
+    text-align: center;
+    padding: 40px 35px;
+    padding-bottom: 28px;
+}
+.titleContainer{
+    margin-bottom: 35px;
+    margin-top: 20px;
+}
+@media only screen and (max-width: 1800px) {
+    .welcomeContainer{
+        margin-left: 240px;
+    }
+}
+@media only screen and (max-width: 830px) {
+    .welcomeContainer{
+        margin-left: 0;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .welcomeContainer{
+        margin-top: 66px;
+    }
+}

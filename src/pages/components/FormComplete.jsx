@@ -19,7 +19,7 @@ export default function FormComplete({handleResetButtonPressed}) {
       </div>
       <div className={styles.buttonsContainer}>
         <Button variant="outlined" startIcon={<ViewListIcon/>} sx={{mx: '5px'}} onClick={() => router.push('/lista-de-clientes')}>Ver a lista de clientes</Button>
-        <Button variant="contained" startIcon={<AddIcon/>} sx={{mx: '5px', height: 'max-content'}} onClick={handleResetButtonPressed}>Adicione um novo cliente</Button>
+        <Button variant="contained" startIcon={<AddIcon/>} sx={{mx: '5px'}} onClick={handleResetButtonPressed}>Adicione um novo cliente</Button>
       </div>
     </>
   );

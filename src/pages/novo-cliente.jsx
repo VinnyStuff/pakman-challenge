@@ -3,32 +3,16 @@ import FormStep1 from './components/FormStep1'
 import FormStep2 from './components/FormStep2'
 import FormStep3 from './components/FormStep3'
 import FormComplete from './components/FormComplete'
-import styles from '../styles/novo-cliente.module.css' //formsNewClient.module.css
-import FormProgressBar from './components/FormProgressBar';
+import styles from '../styles/novo-cliente.module.css'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
-import Button from '@mui/material/Button';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import AddIcon from '@mui/icons-material/Add';
-import { useRouter } from "next/router";
-import { useSelector} from 'react-redux';
-import {
-  themeSelect,
-} from '../features/theme/themeSlice';
-import {
-  newClientForms,
-} from '../features/newClientForms/newClientFormsSlice';
 
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Box from '@mui/material/Box'
 
 export default function NewClient() {
-
-  const canSavesForm = useSelector(newClientForms).formStep3.isFilled //if step3 is filled
-  
-  const router = useRouter()
-
   const [formStepIndex, setFormStepIndex] = useState(0)
 
   const handleNextButtonPressed = () => {
@@ -40,6 +24,8 @@ export default function NewClient() {
   const handleResetButtonPressed = () => {
     setFormStepIndex(0)
   }
+
+  const [step1InputsValue, setStep1InputsValue] = useState({});
 
   return (
     <>
@@ -62,7 +48,7 @@ export default function NewClient() {
                 <Typography variant="subtitle" color='text.secondary'>Escolha uma opção abaixo:</Typography>
               </>
             }
-            
+
           </div>
 
           <FormProgressBar currentStep={formStepIndex}/>
@@ -93,3 +79,26 @@ export default function NewClient() {
     </>
   );
 }
+
+function FormProgressBar({currentStep}) {
+  const steps = [
+    'Dados pessoais',
+    'Endereço',
+    'Detalhes adicionais',
+  ];
+
+  return (
+    <>
+        <Box sx={{py: '20px'}}>
+          <Stepper activeStep={currentStep} alternativeLabel>
+              {steps.map((label) => (
+              <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+              </Step>
+              ))}
+          </Stepper>
+        </Box>
+    </>
+  );
+}
+  

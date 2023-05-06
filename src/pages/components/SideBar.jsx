@@ -74,7 +74,6 @@ export default function SideBar() {
                 setCurrentTab('lista-de-clientes');
                 setValue(1) //bottom bar mobile
             }
-            console.log('b');
         }, [path]);
     }
 
@@ -85,7 +84,7 @@ export default function SideBar() {
                     <IconButton type="button" sx={{ p: "10px", mr: '10px' }}  onClick={handleClick}>
                     <MenuIcon sx={{ height: "26px", width: "26px" }} />
                     </IconButton>
-                    <div className={styles.logoContainer}>
+                    <div className={styles.logoContainer} onClick={() => router.push('/')}>
                      <img className={styles.logo} src={logo} alt='logo' height={'100%'}/>
                 </div>
 
