@@ -3,16 +3,25 @@ import styles from '../styles/lista-de-clientes.module.css'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTheme } from "@mui/material/styles";
-
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
+import { useRouter } from "next/router";
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function CustomerList() {
+  const router = useRouter();
+
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -36,34 +45,67 @@ export default function CustomerList() {
     clientsRef.current[i] = createRef();
   });
 
+  const handleDeleteButton = () => {
+    for (let i = 0; i < clients.length; i++) {
+      clientsRef.current[i].current.deleteClient();
+    }
+  }
+
+
+
   return (
     <>
       <div className={styles.customerListContainer}>
-        <button onClick={() => {for (let i = 0; i < clients.length; i++) {
-                                  clientsRef.current[i].current.isChecked();
-                                }; 
-                                setClients(getClients())}}>bla</button>
-        <div className={styles.titlesContainer}>
-          <div className={styles.nameContainer}>
-            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Nome</Typography>
-          </div>
-          <div className={styles.cpfContainer}>
-            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>CPF</Typography>
-          </div>
-          <div className={styles.telephoneContainer}>
-            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Telefone</Typography>
-          </div>
-          <div className={styles.locationContainer}>
-            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Localização (Estado)</Typography>
-          </div>
-          <div className={styles.emailContainer}>
-            <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>E-mail</Typography>
-          </div>
-        </div>
-        
-        {clients.map((client, index) =>(
-          <Client key={client.dados_pessoais.cpf} props={client}  ref={clientsRef.current[index]}/>
-        ))}
+        { clients.length > 0 ? (
+          <>
+            <div className={styles.listContainer}>
+               <div className={styles.buttonsContainer}>
+                <div className={styles.searchBarContainer}>
+                  <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%', height: '100%' }}>
+                    <InputBase
+                      sx={{ pl: '15px', flex: 1 }}
+                      placeholder="Pesquise seus clientes"
+                    />
+                    <IconButton type="button" disabled sx={{ p: '10px' }} aria-label="search">
+                      <SearchIcon />
+                    </IconButton>
+                  </Paper>
+                </div>
+                <Button variant="contained" sx={{minWidth: '45px'}} onClick={() => {handleDeleteButton(); setClients(getClients())}}>
+                  <DeleteIcon sx={{position: 'absolute', }}/>
+                </Button>
+              </div>
+              <div className={styles.titleContainer}>
+                <div className={styles.nameContainer}>
+                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Nome</Typography>
+                </div>
+                <div className={styles.cpfContainer}>
+                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>CPF</Typography>
+                </div>
+                <div className={styles.telephoneContainer}>
+                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Telefone</Typography>
+                </div>
+                <div className={styles.locationContainer}>
+                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Localização (Estado)</Typography>
+                </div>
+                <div className={styles.emailContainer}>
+                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>E-mail</Typography>
+                </div>
+              </div>
+              {clients.map((client, index) =>(
+                <Client key={client.dados_pessoais.cpf} props={client}  ref={clientsRef.current[index]}/>
+              ))}
+            </div>
+          </>
+        ) : 
+          <>
+            <div className={styles.emptyStateContainer}>
+              <Typography variant='h6' color='text.secondary' sx={{fontWeight: 'bold'}}>Lista de clientes está vazia.</Typography>
+              <Typography variant='body1' color='text.disabled' sx={{fontWeight: 'bold'}}>pressione o botão abaixo para adicionar um cliente:</Typography>
+              <Button variant="contained" startIcon={<PlaylistAddOutlinedIcon/>} sx={{borderRadius: '30px', mt: '16px', width: 'max-content'}} onClick={() => router.push('/novo-cliente')}>Novo Cliente</Button>    
+            </div>
+          </>
+        }
       </div>
     </>
   );
@@ -102,19 +144,17 @@ const Client = forwardRef(( props, ref ) => {
   };
 
   useImperativeHandle(ref, () => ({
-    isChecked() {
+    deleteClient() {
       if(checked){
-        console.log(dados_pessoais.cpf);
         localStorage.removeItem(`cliente-${dados_pessoais.cpf}`)
       }
     }
   }));
 
   return (
-    <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '0'}}>
+    <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '-1px', boxShadow:'none'}} >
       <CardContent sx={{display: 'flex', height: '45px', p: '0', mr: '52px'}}>
-        <Checkbox sx={{mr: '5px', ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
-        <Divider orientation="vertical" variant="middle" flexItem />
+        <Checkbox sx={{ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
         <div className={styles.customerParametersContainer}>
           <div className={styles.nameContainer}>
             <Typography variant='subtitle1'>{dados_pessoais.nome}</Typography>

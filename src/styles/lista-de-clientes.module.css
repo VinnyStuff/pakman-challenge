@@ -1,17 +1,34 @@
 .customerListContainer{
     margin-left: 240px;
     padding: 0 25px;
-    margin-top: 100px;
-    white-space: nowrap;
 }
-.titlesContainer{
+.listContainer{
+    margin-top: 100px;
+}
+.buttonsContainer{
+    margin-bottom: 10px;
+    display: flex;
+}
+.searchBarContainer{
+   width: 100%;
+   max-width: 600px;
+   height: 42px;
+   border-radius: 6px;
+   margin-right: 15px;
+}
+.searchBarContainer:focus-within{
+    border: 2px solid #EF4B4B;
+}
+
+.titleContainer{
     padding: 8px 0;
     margin-right: 52px;
+    white-space: nowrap;
 }
-.titlesContainer div{
-    padding-left: 64px;
+.titleContainer div{
+    padding-left: 55px;
 }
-.customerParametersContainer, .titlesContainer{
+.customerParametersContainer, .titleContainer{
     display: flex;
     overflow: hidden;
 }
@@ -47,6 +64,17 @@
 }
 
 
+.emptyStateContainer{
+    height: 100vh;
+    white-space: normal;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 @media only screen and (max-width: 1280px) {
     .emailContainer{
@@ -66,9 +94,6 @@
 
 
 @media only screen and (max-width: 890px) {
-    .customerListContainer{
-        margin-top: 80px;
-    }
     .customerListContainer{
         margin-left: 0;
     }
