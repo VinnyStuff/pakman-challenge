@@ -213,7 +213,7 @@ const Client = forwardRef(( props, ref ) => {
         <Checkbox  sx={{ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
         <div className={styles.customerParametersContainer}>
           <div className={styles.nameContainer}>
-            <Typography variant='subtitle1'>{dados_pessoais.nome}</Typography>
+            <Typography variant='subtitle1'>{dados_pessoais.nome} {dados_pessoais.sobrenome}</Typography>
           </div>
           <div className={styles.cpfContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>{dados_pessoais.cpf}</Typography>
@@ -245,7 +245,7 @@ const Client = forwardRef(( props, ref ) => {
           <div className={styles.cardExtendContainer}>
             <div className={styles.clientPersonalInformations}>
               <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Dados pessoais: </Typography>
-              <Typography variant='subtitle1'>Nome: {dados_pessoais.nome}</Typography>
+              <Typography variant='subtitle1'>Nome: {dados_pessoais.nome} {dados_pessoais.sobrenome}</Typography>
               <Typography variant='subtitle1'>E-mail: {dados_pessoais.cpf}</Typography>
               <Typography variant='subtitle1'>Telefone 1: {dados_pessoais.telefone1}</Typography>
               <Typography variant='subtitle1'>Telefone 2: {dados_pessoais.telefone2}</Typography>
