@@ -6,6 +6,7 @@ import React, {useState, useEffect} from 'react'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import InputNumberMask from './myMaterial/InputNumberMask'
 
 export default function FormStep2({handleNextButtonPressed, handleBackButtonPressed, handleInputsValues}) {
 
@@ -46,7 +47,7 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
   const [canClickNextButton, setCanClickNextButton] = useState(false);
 
   useEffect(() =>{
-    setCanClickNextButton(inputsAddressValues.endereço_1.cep.length > 0 && inputsAddressValues.endereço_1.nomeDaRua.length > 0 && inputsAddressValues.endereço_1.numero.length > 0 && inputsAddressValues.endereço_1.bairro.length > 0 && inputsAddressValues.endereço_1.estado.length > 0 && inputsAddressValues.endereço_1.cidade.length > 0)
+    setCanClickNextButton(inputsAddressValues.endereço_1.cep.length >= 9 && inputsAddressValues.endereço_1.nomeDaRua.length > 0 && inputsAddressValues.endereço_1.numero.length > 0 && inputsAddressValues.endereço_1.bairro.length > 0 && (inputsAddressValues.endereço_1.estado.length) > 0 && inputsAddressValues.endereço_1.cidade.length > 0)
   }, [inputsAddressValues]);
 
 
@@ -77,7 +78,7 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
 
 function CurrentForm({handleValues}){
 
-  const [inputsValue, setTnputsValue] = useState({
+  const [inputsValues, setTnputsValue] = useState({
     cep: '',
     nomeDaRua: '',
     numero: '',
@@ -86,10 +87,32 @@ function CurrentForm({handleValues}){
     estado: '',
     cidade: '',
   })
+  const [isEmptyInputsValues, setIsEmptyInputsValues] = useState({
+    cep: false,
+    nomeDaRua: false,
+    numero: false,
+    bairro: false,
+    estado: false,
+    cidade: false,
+  })
+  const handleBlur = (event) =>{
+    const { id, value } = event.target;
+    console.log(value);
+    if(value.length === 0){
+      setIsEmptyInputsValues({...isEmptyInputsValues, 
+        [id]: true
+      })
+    }
+    else{
+      setIsEmptyInputsValues({...isEmptyInputsValues, 
+        [id]: false
+      })
+    }
+  }
 
   useEffect(() =>{ 
-    handleValues(inputsValue);
-  }, [inputsValue]);
+    handleValues(inputsValues);
+  }, [inputsValues]);
 
   const states = [
     'Acre',
@@ -126,26 +149,58 @@ function CurrentForm({handleValues}){
      <div className={styles.inputContainer} >
         <div className={styles.inputs}>
             <Typography variant='subtitle1'>*CEP</Typography>
-            <TextField size="small" id="outlined-basic" variant="outlined" name='cep' fullWidth onChange={(e) =>  setTnputsValue({...inputsValue, cep: e.target.value})}/>
+            <InputNumberMask onBlur={handleBlur} mask="99999-999" id='cep' onChange={(e) =>  setTnputsValue({...inputsValues, cep: e.target.value})}/>
+            <div className={styles.errorMessageContainer}>
+              { inputsValues.cep.length === 0 && isEmptyInputsValues.cep ? (
+                <>
+                  <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
+                </>
+              ): inputsValues.cep.length > 0 && inputsValues.cep.length < 9 ? (
+                <>
+                  <Typography variant='subtitle2' color='error'>É necessário no minimo 9 caracteres.</Typography> 
+                </>
+              ) : null }   
+            </div>
           </div>
           <div className={styles.inputs}>
             <Typography variant='subtitle1'>*Nome da Rua</Typography>
-            <TextField size="small" id="outlined-basic" variant="outlined" name='nomeDaRua' fullWidth onChange={(e) =>  setTnputsValue({...inputsValue, nomeDaRua: e.target.value})}/>
+            <TextField onBlur={handleBlur} id='nomeDaRua' size="small" variant="outlined" fullWidth onChange={(e) =>  setTnputsValue({...inputsValues, nomeDaRua: e.target.value})}/>
+            <div className={styles.errorMessageContainer}>
+              { inputsValues.nomeDaRua.length === 0 && isEmptyInputsValues.nomeDaRua ? (
+                <>
+                  <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
+                </>
+              ): null}
+            </div>
           </div>
       </div>
 
       <div className={styles.inputContainer}>
         <div className={styles.inputs}>
           <Typography variant='subtitle1'>*Número</Typography>
-          <TextField size="small" id="outlined-basic" variant="outlined" name='numero' fullWidth onChange={(e) =>  setTnputsValue({...inputsValue, numero: e.target.value})}/>
+          <InputNumberMask onBlur={handleBlur} id='numero' mask="9999999" onChange={(e) =>  setTnputsValue({...inputsValues, numero: e.target.value})}/>
+          <div className={styles.errorMessageContainer}>
+            { inputsValues.numero.length === 0 && isEmptyInputsValues.numero ? (
+              <>
+                <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
+              </>
+            ): null}
+          </div>
         </div>
         <div className={styles.inputs}>
           <Typography variant='subtitle1'>Complemento</Typography>
-          <TextField size="small" id="outlined-basic" variant="outlined" name='complemento' fullWidth onChange={(e) =>  setTnputsValue({...inputsValue, complemento: e.target.value})}/>
+          <TextField size="small" variant="outlined" name='complemento' fullWidth onChange={(e) =>  setTnputsValue({...inputsValues, complemento: e.target.value})}/>
         </div>
         <div className={styles.inputs}>
           <Typography variant='subtitle1'>*Bairro</Typography>
-          <TextField size="small" id="outlined-basic" variant="outlined" name='bairro' fullWidth onChange={(e) =>  setTnputsValue({...inputsValue, bairro: e.target.value})}/>
+          <TextField onBlur={handleBlur} id='bairro' size="small" variant="outlined" name='bairro' fullWidth onChange={(e) =>  setTnputsValue({...inputsValues, bairro: e.target.value})}/>
+          <div className={styles.errorMessageContainer}>
+            { inputsValues.bairro.length === 0 && isEmptyInputsValues.bairro ? (
+              <>
+                <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
+              </>
+            ): null}
+          </div>
         </div>
       </div>
 
@@ -154,7 +209,6 @@ function CurrentForm({handleValues}){
           <Typography variant='subtitle1'>*Estado</Typography>
           <Autocomplete
             size="small"
-            id="disabled-options-demo"
             options={states}
             renderInput={(params) => <TextField {...params} label="" />}
             onChange={(event, value) =>
@@ -162,11 +216,28 @@ function CurrentForm({handleValues}){
                 ...prevState,
                 estado: value,
               }))}
+            onBlur={handleBlur} 
+            id='estado'
           />
+          <div className={styles.errorMessageContainer}>
+            { isEmptyInputsValues.estado && inputsValues.estado === '' ? (
+              <>
+                <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
+              </>
+            ): null}
+          </div>
         </div>
+        
         <div className={styles.inputs}>
           <Typography variant='subtitle1'>*Cidade</Typography>
-          <TextField size="small" id="outlined-basic" variant="outlined" fullWidth onChange={(e) =>  setTnputsValue({...inputsValue, cidade: e.target.value})}/>
+          <TextField  onBlur={handleBlur} id='cidade' size="small" variant="outlined" fullWidth onChange={(e) =>  setTnputsValue({...inputsValues, cidade: e.target.value})}/>
+          <div className={styles.errorMessageContainer}>
+            { inputsValues.cidade.length === 0 && isEmptyInputsValues.cidade ? (
+              <>
+                <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
+              </>
+            ): null}
+          </div>
         </div>
       </div>
     </>

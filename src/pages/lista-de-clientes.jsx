@@ -248,7 +248,7 @@ const Client = forwardRef(( props, ref ) => {
               <Typography variant='subtitle1'>Nome: {dados_pessoais.nome} {dados_pessoais.sobrenome}</Typography>
               <Typography variant='subtitle1'>E-mail: {dados_pessoais.cpf}</Typography>
               <Typography variant='subtitle1'>Telefone 1: {dados_pessoais.telefone1}</Typography>
-              <Typography variant='subtitle1'>Telefone 2: {dados_pessoais.telefone2}</Typography>
+              <Typography variant='subtitle1'>Telefone 2 (Opcional): {dados_pessoais.telefone2}</Typography>
               <Typography variant='subtitle1'>Data de nascimento: {dados_pessoais.dataDeNascimento}</Typography>
               <Typography variant='subtitle1'>CPF: {dados_pessoais.cpf}</Typography>
               <Typography variant='subtitle1'>Renda mensal: {dados_pessoais.rendaMensal}</Typography>
@@ -256,7 +256,7 @@ const Client = forwardRef(( props, ref ) => {
             
             {endereços.map((endereço, index) => (
               <div key={index}>
-                <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Endereço {index + 1}: </Typography>
+                <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Endereço {index + 1} {index === 1 ? '(Opcional)' : ''}: </Typography>
                 <Typography variant='subtitle1'>CEP: {endereço.cep}</Typography>
                 <Typography variant='subtitle1'>Nome da Rua: {endereço.nomeDaRua}</Typography>
                 <Typography variant='subtitle1'>Número:{endereço.numero} </Typography>
