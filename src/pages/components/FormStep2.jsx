@@ -114,42 +114,61 @@ function CurrentForm({handleValues}){
     handleValues(inputsValues);
   }, [inputsValues]);
 
-  const states = [
-    'Acre',
-    'Alagoas',
-    'Amapá',
-    'Amazonas',
-    'Bahia',
-    'Ceará',
-    'Distrito Federal',
-    'Espírito Santo',
-    'Goiás',
-    'Maranhão',
-    'Mato Grosso',
-    'Mato Grosso do Sul',
-    'Minas Gerais',
-    'Pará',
-    'Paraíba',
-    'Paraná',
-    'Pernambuco',
-    'Piauí',
-    'Rio de Janeiro',
-    'Rio Grande do Norte',
-    'Rio Grande do Sul',
-    'Rondônia',
-    'Roraima',
-    'Santa Catarina',
-    'São Paulo',
-    'Sergipe',
-    'Tocantins'
+  const states = [  
+    { uf: 'AC', nome: 'Acre' },  
+    { uf: 'AL', nome: 'Alagoas' },  
+    { uf: 'AP', nome: 'Amapá' },  
+    { uf: 'AM', nome: 'Amazonas' },  
+    { uf: 'BA', nome: 'Bahia' },  
+    { uf: 'CE', nome: 'Ceará' },  
+    { uf: 'DF', nome: 'Distrito Federal' },  
+    { uf: 'ES', nome: 'Espírito Santo' },  
+    { uf: 'GO', nome: 'Goiás' },  
+    { uf: 'MA', nome: 'Maranhão' },  
+    { uf: 'MT', nome: 'Mato Grosso' },  
+    { uf: 'MS', nome: 'Mato Grosso do Sul' },  
+    { uf: 'MG', nome: 'Minas Gerais' },  
+    { uf: 'PA', nome: 'Pará' },  
+    { uf: 'PB', nome: 'Paraíba' },  
+    { uf: 'PR', nome: 'Paraná' },  
+    { uf: 'PE', nome: 'Pernambuco' },  
+    { uf: 'PI', nome: 'Piauí' },  
+    { uf: 'RJ', nome: 'Rio de Janeiro' },  
+    { uf: 'RN', nome: 'Rio Grande do Norte' },  
+    { uf: 'RS', nome: 'Rio Grande do Sul' },  
+    { uf: 'RO', nome: 'Rondônia' },  
+    { uf: 'RR', nome: 'Roraima' },  
+    { uf: 'SC', nome: 'Santa Catarina' },  
+    { uf: 'SP', nome: 'São Paulo' },  
+    { uf: 'SE', nome: 'Sergipe' },  
+    { uf: 'TO', nome: 'Tocantins' }
   ];
+
+  useEffect(() => {
+    if(inputsValues.cep.length >= 9){
+      const cep = inputsValues.cep;
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => response.json())
+      .then(data => {
+        setTnputsValue({...inputsValues, 
+          nomeDaRua: data.logradouro,
+          cidade: data.localidade,
+          bairro: data.bairro,
+          estado: states.find((state) => state.uf === data.uf).nome
+        })
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  }, [inputsValues.cep]);
 
   return(
     <>
      <div className={styles.inputContainer} >
         <div className={styles.inputs}>
             <Typography variant='subtitle1'>*CEP</Typography>
-            <InputNumberMask onBlur={handleBlur} mask="99999-999" id='cep' onChange={(e) =>  setTnputsValue({...inputsValues, cep: e.target.value})}/>
+            <InputNumberMask onBlur={handleBlur} mask="99999-999" id='cep' value={inputsValues.cep} onChange={(e) =>  setTnputsValue({...inputsValues, cep: e.target.value})}/>
             <div className={styles.errorMessageContainer}>
               { inputsValues.cep.length === 0 && isEmptyInputsValues.cep ? (
                 <>
@@ -157,14 +176,14 @@ function CurrentForm({handleValues}){
                 </>
               ): inputsValues.cep.length > 0 && inputsValues.cep.length < 9 ? (
                 <>
-                  <Typography variant='subtitle2' color='error'>É necessário no minimo 9 caracteres.</Typography> 
+                  <Typography variant='subtitle2' color='error'>É necessário no minimo 8 dígitos.</Typography> 
                 </>
               ) : null }   
             </div>
           </div>
           <div className={styles.inputs}>
-            <Typography variant='subtitle1'>*Nome da Rua</Typography>
-            <TextField onBlur={handleBlur} id='nomeDaRua' size="small" variant="outlined" fullWidth onChange={(e) =>  setTnputsValue({...inputsValues, nomeDaRua: e.target.value})}/>
+            <Typography variant='subtitle1'>*Logradouro</Typography> {/* Nome da Rua */}
+            <TextField onBlur={handleBlur} id='nomeDaRua' size="small" variant="outlined" fullWidth value={inputsValues.nomeDaRua} onChange={(e) =>  setTnputsValue({...inputsValues, nomeDaRua: e.target.value})}/>
             <div className={styles.errorMessageContainer}>
               { inputsValues.nomeDaRua.length === 0 && isEmptyInputsValues.nomeDaRua ? (
                 <>
@@ -193,7 +212,7 @@ function CurrentForm({handleValues}){
         </div>
         <div className={styles.inputs}>
           <Typography variant='subtitle1'>*Bairro</Typography>
-          <TextField onBlur={handleBlur} id='bairro' size="small" variant="outlined" name='bairro' fullWidth onChange={(e) =>  setTnputsValue({...inputsValues, bairro: e.target.value})}/>
+          <TextField onBlur={handleBlur} id='bairro' size="small" variant="outlined" name='bairro' fullWidth value={inputsValues.bairro} onChange={(e) =>  setTnputsValue({...inputsValues, bairro: e.target.value})}/>
           <div className={styles.errorMessageContainer}>
             { inputsValues.bairro.length === 0 && isEmptyInputsValues.bairro ? (
               <>
@@ -209,7 +228,8 @@ function CurrentForm({handleValues}){
           <Typography variant='subtitle1'>*Estado</Typography>
           <Autocomplete
             size="small"
-            options={states}
+            options={states.map((estado) => estado.nome)}
+            value={inputsValues.estado}
             renderInput={(params) => <TextField {...params} label="" />}
             onChange={(event, value) =>
               setTnputsValue((prevState) => ({
@@ -230,7 +250,7 @@ function CurrentForm({handleValues}){
         
         <div className={styles.inputs}>
           <Typography variant='subtitle1'>*Cidade</Typography>
-          <TextField  onBlur={handleBlur} id='cidade' size="small" variant="outlined" fullWidth onChange={(e) =>  setTnputsValue({...inputsValues, cidade: e.target.value})}/>
+          <TextField  onBlur={handleBlur} id='cidade' size="small" variant="outlined" fullWidth value={inputsValues.cidade} onChange={(e) =>  setTnputsValue({...inputsValues, cidade: e.target.value})}/>
           <div className={styles.errorMessageContainer}>
             { inputsValues.cidade.length === 0 && isEmptyInputsValues.cidade ? (
               <>
