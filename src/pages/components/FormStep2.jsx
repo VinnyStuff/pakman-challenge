@@ -2,7 +2,7 @@ import styles from '../../styles/FormSteps.module.css'
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -77,7 +77,6 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
 }
 
 function CurrentForm({handleValues}){
-
   const [inputsValues, setTnputsValue] = useState({
     cep: '',
     nomeDaRua: '',
@@ -95,6 +94,8 @@ function CurrentForm({handleValues}){
     estado: false,
     cidade: false,
   })
+  const [cepNotFound, setCepNotFound] = useState(false)
+
   const handleBlur = (event) =>{
     const { id, value } = event.target;
     console.log(value);
@@ -146,22 +147,40 @@ function CurrentForm({handleValues}){
 
   useEffect(() => {
     if(inputsValues.cep.length >= 9){
-      const cep = inputsValues.cep;
-      fetch(`https://viacep.com.br/ws/${cep}/json/`)
-      .then(response => response.json())
-      .then(data => {
-        setTnputsValue({...inputsValues, 
-          nomeDaRua: data.logradouro,
-          cidade: data.localidade,
-          bairro: data.bairro,
-          estado: states.find((state) => state.uf === data.uf).nome
-        })
-      })
-      .catch(error => {
-        console.error(error);
-      });
+      setLocationByCep(inputsValues.cep)
     }
   }, [inputsValues.cep]);
+
+  async function setLocationByCep(cep){
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+
+      setTnputsValue({
+        ...inputsValues,
+        nomeDaRua: data.logradouro,
+        cidade: data.localidade,
+        bairro: data.bairro,
+        estado: states.find((state) => state.uf === data.uf).nome,
+      });
+
+      setCepNotFound(false);
+      
+
+    } catch (error) {
+      console.error(error);
+
+      setTnputsValue({...inputsValues, 
+        nomeDaRua: '',
+        cidade: '',
+        bairro: '',
+        estado: '',
+      });
+
+      setCepNotFound(true);
+    }
+  }
+
 
   return(
     <>
@@ -179,6 +198,12 @@ function CurrentForm({handleValues}){
                   <Typography variant='subtitle2' color='error'>É necessário no minimo 8 dígitos.</Typography> 
                 </>
               ) : null }   
+
+              { cepNotFound  && inputsValues.cep.length >= 9 ? (
+                <>
+                  <Typography variant='subtitle2' color='error'>CEP não encontrado</Typography> 
+                </>
+              ): null}
             </div>
           </div>
           <div className={styles.inputs}>
