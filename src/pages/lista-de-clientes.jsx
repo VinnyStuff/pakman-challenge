@@ -18,6 +18,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
 import Tooltip from '@mui/material/Tooltip';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function CustomerList() {
   const dividerColor = useTheme().palette.divider;
@@ -54,6 +60,12 @@ export default function CustomerList() {
     for (let i = 0; i < clients.length; i++) {
       clientsRef.current[i].current.deleteClient();
     }
+
+    if (clients.length === getClients().length){
+      handleClick()
+    }
+
+    setClients(getClients());
   }
 
   //searchBar
@@ -61,6 +73,22 @@ export default function CustomerList() {
   useEffect(() => {
     setClientsToShow(clients.filter(client => JSON.stringify(client).toLowerCase().includes(searchInput)));
   }, [searchInput]);
+
+  //material
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
 
   return (
     <>
@@ -82,11 +110,11 @@ export default function CustomerList() {
                     </IconButton>
                   </Paper>
                 </div>
-                <Button variant="outlined" color="primary" sx={{minWidth: '45px', mr: '5px'}} onClick={() => {handleDeleteButton(); setClients(getClients())}}>
+                <Button variant="outlined" color="primary" sx={{minWidth: '45px', mr: '5px'}} onClick={() => handleDeleteButton()}>
                   <DeleteIcon sx={{position: 'absolute', }}/>
                 </Button>
                 <Tooltip title="O botão de deletar apenas funciona quando possui algum cliente selecionado">
-                  <Button variant="text"  sx={{minWidth: '45px'}}>
+                  <Button variant="text"  sx={{minWidth: '45px'}} disableRipple >
                     <InfoIcon sx={{position: 'absolute'}}  color="action"/>
                   </Button>
                 </Tooltip>
@@ -131,6 +159,11 @@ export default function CustomerList() {
           </>
         }
       </div>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
+          Para excluir um cliente, é necessário selecioná-lo primeiro.
+        </Alert>
+      </Snackbar>
     </>
   );
 }
