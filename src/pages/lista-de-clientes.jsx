@@ -19,15 +19,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
 import Tooltip from '@mui/material/Tooltip';
 
-
 export default function CustomerList() {
+  const dividerColor = useTheme().palette.divider;
   const router = useRouter();
 
   const [clients, setClients] = useState([]);
+  const [clientsToShow, setClientsToShow] = useState([])
 
   useEffect(() => {
     setClients(getClients());
   }, []);
+  useEffect(() => {
+    setClientsToShow(clients);
+  }, [clients]);
 
   function getClients(){
     const newClients = [];
@@ -35,7 +39,7 @@ export default function CustomerList() {
     for (let key in localStorage) {
       if (key.includes("cliente")) {
         newClients.push(JSON.parse(localStorage.getItem(key)));
-      }
+      }""
     }
 
     return newClients;
@@ -52,7 +56,11 @@ export default function CustomerList() {
     }
   }
 
-
+  //searchBar
+  const [searchInput, setSearchInput] = useState('');
+  useEffect(() => {
+    setClientsToShow(clients.filter(client => JSON.stringify(client).toLowerCase().includes(searchInput)));
+  }, [searchInput]);
 
   return (
     <>
@@ -62,10 +70,12 @@ export default function CustomerList() {
             <div className={styles.listContainer}>
                <div className={styles.buttonsContainer}>
                 <div className={styles.searchBarContainer}>
-                  <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%', height: '100%' }}>
+                  <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%', height: '100%', border: `1px solid ${dividerColor}`}}>
                     <InputBase
-                      sx={{ pl: '15px', flex: 1 }}
+                      sx={{ pl: '15px', flex: 1}}
                       placeholder="Pesquise seus clientes"
+                      value={searchInput}
+                      onChange={(e) => setSearchInput(e.target.value)}
                     />
                     <IconButton type="button" disabled sx={{ p: '10px' }} aria-label="search">
                       <SearchIcon />
@@ -81,26 +91,34 @@ export default function CustomerList() {
                   </Button>
                 </Tooltip>
               </div>
-              <div className={styles.titleContainer}>
-                <div className={styles.nameContainer}>
-                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Nome</Typography>
-                </div>
-                <div className={styles.cpfContainer}>
-                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>CPF</Typography>
-                </div>
-                <div className={styles.telephoneContainer}>
-                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Telefone</Typography>
-                </div>
-                <div className={styles.locationContainer}>
-                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Localização (Estado)</Typography>
-                </div>
-                <div className={styles.emailContainer}>
-                  <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>E-mail</Typography>
-                </div>
-              </div>
-              {clients.map((client, index) =>(
-                <Client key={client.dados_pessoais.cpf} props={client}  ref={clientsRef.current[index]}/>
-              ))}
+              { clientsToShow.length > 0 ? (
+                  <>
+                  <div className={styles.titleContainer}>
+                    <div className={styles.nameContainer}>
+                      <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Nome</Typography>
+                    </div>
+                    <div className={styles.cpfContainer}>
+                      <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>CPF</Typography>
+                    </div>
+                    <div className={styles.telephoneContainer}>
+                      <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Telefone</Typography>
+                    </div>
+                    <div className={styles.locationContainer}>
+                      <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>Localização (Estado)</Typography>
+                    </div>
+                    <div className={styles.emailContainer}>
+                      <Typography variant='subtitle1' color='text.disabled' sx={{fontWeight: 'bold'}}>E-mail</Typography>
+                    </div>
+                  </div>
+                   {clientsToShow.map((client, index) =>(
+                      <Client key={client.dados_pessoais.cpf} props={client}  ref={clientsRef.current[index]}/>
+                    ))}
+                  </>
+                ) : 
+                  <>
+                    <Typography variant='subtitle1' color='text.disabled'  sx={{fontWeight: 'bold', textAlign: 'center', pt: '18px'}}>Não há resultados para a sua busca.</Typography>
+                  </>
+                }
             </div>
           </>
         ) : 
@@ -140,9 +158,7 @@ const Client = forwardRef(( props, ref ) => {
     setExpanded(!expanded);
   };
 
-  const theme = useTheme();
-  const dividerColor = theme.palette.divider;
-  const test = theme.palette.primary.light;
+  const dividerColor = useTheme().palette.divider;
 
   const [checked, setChecked] = useState(false);
 
