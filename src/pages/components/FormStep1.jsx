@@ -6,9 +6,11 @@ import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import InputNumberMask from './myMaterial/InputNumberMask'
+import validator from 'validator';
 
 export default function FormStep1({handleNextButtonPressed, handleInputsValues}) {
 
+  const validatorEmail = require('validator');
   const checkTextIsValid = (e) =>{
     const text = e.target.value;
     if (/^[a-zA-Z\s]*$/.test(text) && text.length < 30) {
@@ -18,15 +20,7 @@ export default function FormStep1({handleNextButtonPressed, handleInputsValues})
       return false;
     }
   }
-  const checkEmailIsValid = (e) =>{
-    const text = e.target.value;
-    if (text.includes("@")){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
+
 
 
   const [inputsValues, setTnputsValue] = useState({
@@ -61,7 +55,7 @@ export default function FormStep1({handleNextButtonPressed, handleInputsValues})
   const [canClickNextButton, setCanClickNextButton] = useState(false);
 
   useEffect(() =>{ 
-    setCanClickNextButton(inputsValues.nome.length >= 3 && inputsValues.sobrenome.length >= 3 && inputsValues.email.length > 0 && inputsValues.telefone1.length >= 15)
+    setCanClickNextButton(inputsValues.nome.length >= 3 && inputsValues.sobrenome.length >= 3 && validator.isEmail(inputsValues.email) && inputsValues.telefone1.length >= 15)
   }, [inputsValues]);
 
   return (
@@ -109,9 +103,9 @@ export default function FormStep1({handleNextButtonPressed, handleInputsValues})
                   <>
                     <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
                   </>
-                ): inputsValues.email.length > 0 && inputsValues.email.length < 3 ? (
+                ): !validator.isEmail(inputsValues.email) && inputsValues.email.length > 0 ?(
                   <>
-                    <Typography variant='subtitle2' color='error'>É necessário no minimo 3 caracteres.</Typography> 
+                    <Typography variant='subtitle2' color='error'>Coloque um e-mail válido</Typography> 
                   </>
                 ) : null }   
               </div>
