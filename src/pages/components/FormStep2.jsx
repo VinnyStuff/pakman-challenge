@@ -98,7 +98,6 @@ function CurrentForm({handleValues}){
 
   const handleBlur = (event) =>{
     const { id, value } = event.target;
-    console.log(value);
     if(value.length === 0){
       setIsEmptyInputsValues({...isEmptyInputsValues, 
         [id]: true
@@ -145,6 +144,7 @@ function CurrentForm({handleValues}){
     { uf: 'TO', nome: 'Tocantins' }
   ];
 
+  const numeroRef = useRef(null);
   useEffect(() => {
     if(inputsValues.cep.length >= 9){
       setLocationByCep(inputsValues.cep)
@@ -166,6 +166,7 @@ function CurrentForm({handleValues}){
 
       setCepNotFound(false);
       
+      numeroRef.current.focus();
 
     } catch (error) {
       console.error(error);
@@ -222,7 +223,7 @@ function CurrentForm({handleValues}){
       <div className={styles.inputContainer}>
         <div className={styles.inputs}>
           <Typography variant='subtitle1'>*Número</Typography>
-          <InputNumberMask onBlur={handleBlur} id='numero' mask="9999999" onChange={(e) =>  setTnputsValue({...inputsValues, numero: e.target.value})}/>
+          <TextField type='number' size="small" variant="outlined" onBlur={handleBlur} inputRef={numeroRef} id='numero' value={inputsValues.numero} onChange={(e) => e.target.value.length < 7 && setTnputsValue({...inputsValues, numero: e.target.value})}/>
           <div className={styles.errorMessageContainer}>
             { inputsValues.numero.length === 0 && isEmptyInputsValues.numero ? (
               <>
