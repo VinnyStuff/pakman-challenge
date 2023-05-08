@@ -125,3 +125,22 @@
     width: max-content;
     flex-grow: 1;
 }
+
+.dialog{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.dialog div{
+    width: 400px;
+}
+
+@media only screen and (max-width: 1371px) {
+    .dialog{
+        flex-direction: column;
+    }
+    .dialog div{
+        width: 100%;
+    }
+}

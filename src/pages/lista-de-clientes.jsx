@@ -25,6 +25,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
+import Divider from '@mui/material/Divider'
+import InputAdornment from '@mui/material/InputAdornment';
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -263,7 +265,7 @@ const Client = forwardRef(( props, ref ) => {
                 <Typography variant='subtitle1'>Telefone 2 (Opcional): {dados_pessoais.telefone2}</Typography>
                 <Typography variant='subtitle1'>Data de nascimento: {dados_pessoais.dataDeNascimento}</Typography>
                 <Typography variant='subtitle1'>CPF: {dados_pessoais.cpf}</Typography>
-                <Typography variant='subtitle1'>Renda mensal: {dados_pessoais.rendaMensal}</Typography>
+                <Typography variant='subtitle1'>Renda mensal: R${dados_pessoais.rendaMensal}</Typography>
               </div>
               
               {endereços.map((endereço, index) => (
@@ -290,59 +292,90 @@ const Client = forwardRef(( props, ref ) => {
         <Dialog
           open={openDialog}
           onClose={handleCloseDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
           sx={{zIndex: '9999999'}}
+          maxWidth="false"
+          className={styles.dialogContainer}
         >
         <DialogTitle>
           {`Cliente #${dados_pessoais.cpf.replace(/[.-]/g, '')}`}
         </DialogTitle>
-        <DialogContent>
-          <div>
-            <Typography variant='subtitle1' color='text.disabled'>Nome</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto} disabled/>
-            
-            <Typography variant='subtitle1' color='text.disabled'>Sobrenome</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto} disabled/>
+        <DialogContent className={styles.dialogContainer}>
+          <div className={styles.dialog}>
+            <div>
+              <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Dados Pessoais:</Typography> 
 
-            <Typography variant='subtitle1'>E-mail</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1' color='text.disabled'>Nome</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nome} disabled sx={{mb: '8px'}}/>
+              
+              <Typography variant='subtitle1' color='text.disabled'>Sobrenome</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.sobrenome} disabled sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Telefone 1</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>E-mail</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.email} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Telefone 2</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>Telefone 1</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.telefone1} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Data de Nascimento</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
-            
-            <Typography variant='subtitle1'>CPF</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>Telefone 2</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.telefone2} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Renda Mensal</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'  color='text.disabled'>Data de Nascimento</Typography> 
+              <TextField size="small" disabled variant="outlined"fullWidth value={dados_pessoais.dataDeNascimento} sx={{mb: '8px'}}/>
+              
+              <Typography variant='subtitle1' color='text.disabled'>CPF</Typography> 
+              <TextField size="small" disabled variant="outlined"fullWidth value={dados_pessoais.cpf} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>CEP</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>Renda Mensal</Typography> 
+              
+            </div>
+            <div>
+              <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Endereço 1:</Typography> 
 
-            <Typography variant='subtitle1'>Nome da Rua</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>CEP</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[0].cep} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Número</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>Nome da Rua</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[0].nomeDaRua} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Complemento</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
-            
-            <Typography variant='subtitle1'>Bairro</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>Número</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[0].numero} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Estado</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>Complemento</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[0].complemento} sx={{mb: '8px'}}/>
+              
+              <Typography variant='subtitle1'>Bairro</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[0].bairro} sx={{mb: '8px'}}/>
 
-            <Typography variant='subtitle1'>Cidade</Typography> 
-            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+              <Typography variant='subtitle1'>Estado</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[0].estado} sx={{mb: '8px'}}/>
+
+              <Typography variant='subtitle1'>Cidade</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[0].cidade}/>
+            </div>
+            <div>
+              <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Endereço 2:</Typography> 
+
+              <Typography variant='subtitle1'>CEP</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[1].cep} sx={{mb: '8px'}}/>
+
+              <Typography variant='subtitle1'>Nome da Rua</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[1].nomeDaRua} sx={{mb: '8px'}}/>
+
+              <Typography variant='subtitle1'>Número</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[1].numero} sx={{mb: '8px'}}/>
+
+              <Typography variant='subtitle1'>Complemento</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[1].complemento} sx={{mb: '8px'}}/>
+              
+              <Typography variant='subtitle1'>Bairro</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[1].bairro} sx={{mb: '8px'}}/>
+
+              <Typography variant='subtitle1'>Estado</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[1].estado} sx={{mb: '8px'}}/>
+
+              <Typography variant='subtitle1'>Cidade</Typography> 
+              <TextField size="small" variant="outlined"fullWidth value={endereços[1].cidade}/>
+            </div>
           </div>
         </DialogContent>
         <DialogActions>
