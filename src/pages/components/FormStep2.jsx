@@ -33,6 +33,28 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
     },
   });
 
+  const checkAddress2IsValid = () =>{
+    if(inputsAddressValues.endereço_2.cep.length === 0 && 
+      inputsAddressValues.endereço_2.nomeDaRua.length === 0 &&
+      inputsAddressValues.endereço_2.numero.length === 0 &&
+      inputsAddressValues.endereço_2.estado === null &&
+      inputsAddressValues.endereço_2.cidade.length === 0
+      ){
+      return true;
+    }
+    else if (inputsAddressValues.endereço_2.cep.length >= 9 && 
+    inputsAddressValues.endereço_2.nomeDaRua.length > 0 &&
+    inputsAddressValues.endereço_2.numero.length > 0 &&
+    inputsAddressValues.endereço_2.estado !== null &&
+    inputsAddressValues.endereço_2.cidade.length > 0
+    ){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   const handleAdress1InputsValues = (value) => {
     setInputsAddressValues({...inputsAddressValues, 
       endereço_1: value,
@@ -47,11 +69,13 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
   const [canClickNextButton, setCanClickNextButton] = useState(false);
 
   useEffect(() =>{
-    setCanClickNextButton(inputsAddressValues.endereço_1.cep.length >= 9 && 
+    setCanClickNextButton(
+      inputsAddressValues.endereço_1.cep.length >= 9 && 
       inputsAddressValues.endereço_1.nomeDaRua.length > 0 && 
       inputsAddressValues.endereço_1.numero.length > 0 && inputsAddressValues.endereço_1.bairro.length > 0 && 
       inputsAddressValues.endereço_1.estado !== null && 
-      inputsAddressValues.endereço_1.cidade.length > 0)
+      inputsAddressValues.endereço_1.cidade.length > 0 &&
+      checkAddress2IsValid())
   }, [inputsAddressValues]);
 
 
@@ -65,11 +89,11 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
           
         
         <div style={{display: currentAddress === 1 ? 'inherit' : 'none'}} id='address1'>
-          <CurrentForm handleValues={handleAdress1InputsValues} />
+          <CurrentForm handleValues={handleAdress1InputsValues} address={2}/>
         </div>
         
         <div style={{display: currentAddress === 2 ? 'inherit' : 'none'}} id='address2'>
-          <CurrentForm handleValues={handleAdress2InputsValues}/>
+          <CurrentForm handleValues={handleAdress2InputsValues} address={2}/>
         </div>
       </div>
       <div className={styles.buttonsContainer}>
@@ -80,14 +104,14 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
   )
 }
 
-function CurrentForm({handleValues}){
+function CurrentForm({handleValues, address}){
   const [inputsValues, setTnputsValue] = useState({
     cep: '',
     nomeDaRua: '',
     numero: '',
     complemento: '',
     bairro: '',
-    estado: '',
+    estado: null,
     cidade: '',
   })
   const [isEmptyInputsValues, setIsEmptyInputsValues] = useState({
@@ -186,6 +210,24 @@ function CurrentForm({handleValues}){
     }
   }
 
+  const checkAddress2 = () =>{
+    if(address === 1){
+      return true;
+    }
+    else {
+      if(inputsValues.cep.length === 0 && 
+        inputsValues.nomeDaRua.length === 0 &&
+        inputsValues.numero.length === 0 &&
+        inputsValues.estado === null &&
+        inputsValues.cidade.length === 0
+        ){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+  }
 
   return(
     <>
@@ -194,7 +236,7 @@ function CurrentForm({handleValues}){
             <Typography variant='subtitle1'>*CEP</Typography>
             <InputNumberMask onBlur={handleBlur} mask="99999-999" id='cep' value={inputsValues.cep} onChange={(e) =>  setTnputsValue({...inputsValues, cep: e.target.value})}/>
             <div className={styles.errorMessageContainer}>
-              { inputsValues.cep.length === 0 && isEmptyInputsValues.cep ? (
+              { inputsValues.cep.length === 0 && isEmptyInputsValues.cep && checkAddress2()  ? (
                 <>
                   <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
                 </>
@@ -215,7 +257,7 @@ function CurrentForm({handleValues}){
             <Typography variant='subtitle1'>*Logradouro</Typography> {/* Nome da Rua */}
             <TextField onBlur={handleBlur} id='nomeDaRua' size="small" variant="outlined" fullWidth value={inputsValues.nomeDaRua} onChange={(e) =>  setTnputsValue({...inputsValues, nomeDaRua: e.target.value})}/>
             <div className={styles.errorMessageContainer}>
-              { inputsValues.nomeDaRua.length === 0 && isEmptyInputsValues.nomeDaRua ? (
+              { inputsValues.nomeDaRua.length === 0 && isEmptyInputsValues.nomeDaRua && checkAddress2()? (
                 <>
                   <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
                 </>
@@ -229,7 +271,7 @@ function CurrentForm({handleValues}){
           <Typography variant='subtitle1'>*Número</Typography>
           <TextField type='number' size="small" variant="outlined" onBlur={handleBlur} inputRef={numeroRef} id='numero' value={inputsValues.numero} onChange={(e) => e.target.value.length < 7 && setTnputsValue({...inputsValues, numero: e.target.value})}/>
           <div className={styles.errorMessageContainer}>
-            { inputsValues.numero.length === 0 && isEmptyInputsValues.numero ? (
+            { inputsValues.numero.length === 0 && isEmptyInputsValues.numero  && checkAddress2() ? (
               <>
                 <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
               </>
@@ -244,7 +286,7 @@ function CurrentForm({handleValues}){
           <Typography variant='subtitle1'>*Bairro</Typography>
           <TextField onBlur={handleBlur} id='bairro' size="small" variant="outlined" name='bairro' fullWidth value={inputsValues.bairro} onChange={(e) =>  setTnputsValue({...inputsValues, bairro: e.target.value})}/>
           <div className={styles.errorMessageContainer}>
-            { inputsValues.bairro.length === 0 && isEmptyInputsValues.bairro ? (
+            { inputsValues.bairro.length === 0 && isEmptyInputsValues.bairro  && checkAddress2() ? (
               <>
                 <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
               </>
@@ -270,7 +312,7 @@ function CurrentForm({handleValues}){
             id='estado'
           />
           <div className={styles.errorMessageContainer}>
-            { isEmptyInputsValues.estado && inputsValues.estado === '' ? (
+            { isEmptyInputsValues.estado && inputsValues.estado === '' && checkAddress2()   ? (
               <>
                 <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
               </>
@@ -282,7 +324,7 @@ function CurrentForm({handleValues}){
           <Typography variant='subtitle1'>*Cidade</Typography>
           <TextField  onBlur={handleBlur} id='cidade' size="small" variant="outlined" fullWidth value={inputsValues.cidade} onChange={(e) =>  setTnputsValue({...inputsValues, cidade: e.target.value})}/>
           <div className={styles.errorMessageContainer}>
-            { inputsValues.cidade.length === 0 && isEmptyInputsValues.cidade ? (
+            { inputsValues.cidade.length === 0 && isEmptyInputsValues.cidade && checkAddress2()  ? (
               <>
                 <Typography variant='subtitle2' color='error'>Este campo é obrigatório</Typography> 
               </>
