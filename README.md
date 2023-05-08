@@ -5,7 +5,6 @@ Challenge Pakman - Front-end Project
 ## About the Project
 The project consists of a client registration and management system, where the following operations can be performed:
 * Add new clients with personal and address information
-* Edit the information of an existing client
 * Delete a client
 * View the list of registered clients
 
