@@ -12,7 +12,7 @@ export default function Index() {
   return (
     <>
       <div className={styles.wrapper}>
-        <Card className={styles.welcomeContainer}>
+        <div className={styles.welcomeContainer}>
           <img src='https://i.imgur.com/l9Vksoo.png' alt='logo' height={'100px'}/>
           <div className={styles.titleContainer}>
             <Typography variant="h3" color='text.primary' sx={{fontWeight: 'bold', mb: '8px'}}>Bem vindo!</Typography>
@@ -22,7 +22,7 @@ export default function Index() {
             <Button variant="contained" startIcon={<PlaylistAddOutlinedIcon/>} sx={{mx: '5px', borderRadius: '30px', mb: '12px'}} onClick={() => router.push('/novo-cliente')}>Novo Cliente</Button>
             <Button variant="outlined" startIcon={<ViewListOutlinedIcon/>} sx={{mx: '5px', borderRadius: '30px', mb: '12px'}} onClick={() => router.push('/lista-de-clientes')}>Lista de Clientes</Button>
           </div>
-        </Card>  
+        </div>  
       </div>
     </>
   );
