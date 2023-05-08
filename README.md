@@ -1,6 +1,8 @@
 Challenge Pakman - Front-end Project
 ===========
 
+## Available at 
+You can access this project at https://vinnystuff.github.io/pakman-challenge/
 
 ## About the Project
 The project consists of a client registration and management system, where the following operations can be performed:
