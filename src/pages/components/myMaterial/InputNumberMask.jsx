@@ -7,7 +7,7 @@ export default function InputNumberMask(props) {
   return (
     <>
       <InputMask mask={mask} {...rest} maskChar={null}>
-        {() => <TextField size="small" variant="outlined" id={id} fullWidth/>}
+        {() => <TextField size="small" variant="outlined" placeholder={placeholder} id={id} fullWidth/>}
       </InputMask>
     </>
   );

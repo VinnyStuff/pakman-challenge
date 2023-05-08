@@ -47,7 +47,11 @@ export default function FormStep2({handleNextButtonPressed, handleBackButtonPres
   const [canClickNextButton, setCanClickNextButton] = useState(false);
 
   useEffect(() =>{
-    setCanClickNextButton(inputsAddressValues.endereço_1.cep.length >= 9 && inputsAddressValues.endereço_1.nomeDaRua.length > 0 && inputsAddressValues.endereço_1.numero.length > 0 && inputsAddressValues.endereço_1.bairro.length > 0 && (inputsAddressValues.endereço_1.estado.length) > 0 && inputsAddressValues.endereço_1.cidade.length > 0)
+    setCanClickNextButton(inputsAddressValues.endereço_1.cep.length >= 9 && 
+      inputsAddressValues.endereço_1.nomeDaRua.length > 0 && 
+      inputsAddressValues.endereço_1.numero.length > 0 && inputsAddressValues.endereço_1.bairro.length > 0 && 
+      inputsAddressValues.endereço_1.estado !== null && 
+      inputsAddressValues.endereço_1.cidade.length > 0)
   }, [inputsAddressValues]);
 
 
@@ -202,7 +206,7 @@ function CurrentForm({handleValues}){
 
               { cepNotFound  && inputsValues.cep.length >= 9 ? (
                 <>
-                  <Typography variant='subtitle2' color='error'>CEP não encontrado</Typography> 
+                  <Typography variant='subtitle2' color='error'>CEP inválido</Typography> 
                 </>
               ): null}
             </div>

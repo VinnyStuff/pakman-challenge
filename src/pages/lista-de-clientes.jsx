@@ -71,7 +71,8 @@ export default function CustomerList() {
   //searchBar
   const [searchInput, setSearchInput] = useState('');
   useEffect(() => {
-    setClientsToShow(clients.filter(client => JSON.stringify(client).toLowerCase().includes(searchInput)));
+    setClientsToShow(clients.filter(client => JSON.stringify(client).toLowerCase().includes(searchInput.toLowerCase())));
+    console.log(JSON.stringify(clients[0]));
   }, [searchInput]);
 
   //material
@@ -159,8 +160,8 @@ export default function CustomerList() {
           </>
         }
       </div>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} sx={{zIndex: '9999999999999'}}>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%'}}>
           Para excluir um cliente, é necessário selecioná-lo primeiro.
         </Alert>
       </Snackbar>

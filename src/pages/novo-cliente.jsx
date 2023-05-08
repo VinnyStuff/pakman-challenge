@@ -25,7 +25,7 @@ export default function NewClient() {
       telefone2: '', /* opcional */
       dataDeNascimento: '',
       cpf: '',
-      rendaMensal: '',
+      rendaMensal: '', //colocar nome completo
     },
     endereço_1:{
       cep: '',
@@ -132,17 +132,20 @@ export default function NewClient() {
           <div className={styles.form}>
             { formStepIndex < 3 ? (
               <>
-                <div style={{display: formStepIndex === 0 ? 'inherit' : 'none'}}>
-                  <FormStep1 handleNextButtonPressed={handleNextButtonPressed} handleInputsValues={handleInputsValues}/> {/* NOME , SOBRENOME, EMAIL, TELEFONE 1 , TELEFONE 2 */}
+    {/*             <div style={{display: formStepIndex === 0 ? 'inherit' : 'none'}}>
+                  <FormStep1 handleNextButtonPressed={handleNextButtonPressed} handleInputsValues={handleInputsValues}/>
                 </div>
 
                 <div style={{display: formStepIndex === 1 ? 'inherit' : 'none'}}>
-                  <FormStep2 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/> {/* ENDEREÇO 1 E ENDEREÇO 2 (CEP, NOME DA RUA, NUMERO, COMPLEMENTO, BAIRRO, ESTADO, CIDADE) */}
+                  <FormStep2 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/>
                 </div>
 
                 <div style={{display: formStepIndex === 2 ? 'inherit' : 'none'}}>
-                  <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/> {/* DATA DE NASCIMENTO , CPF , RENDA MENSAL */}
-                </div> 
+                  <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/>
+                </div>  */}
+                <div>
+                  <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/>
+                </div>
               </>
             ) : 
               <>
