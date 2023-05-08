@@ -20,6 +20,12 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -88,7 +94,6 @@ export default function CustomerList() {
 
     setOpen(false);
   };
-
 
   return (
     <>
@@ -202,76 +207,150 @@ const Client = forwardRef(( props, ref ) => {
     }
   }));
 
+  //mui
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   return (
-    <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '-1px', boxShadow:'none'}} >
-      <CardContent sx={{display: 'flex', height: '45px', p: '0', pr: '52px'}}>
-        <Checkbox  sx={{ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
-        <div className={styles.customerParametersContainer}>
-          <div className={styles.nameContainer}>
-            <Typography variant='subtitle1'>{dados_pessoais.nomeCompleto.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Typography>
-          </div>
-          <div className={styles.cpfContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>{dados_pessoais.cpf}</Typography>
-          </div>
-          <div className={styles.telephoneContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>{dados_pessoais.telefone1}</Typography>
-          </div>
-          <div className={styles.locationContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>{endereços[0].estado}</Typography>
-          </div>
-          <div className={styles.emailContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
-            <Typography variant='subtitle1'>{dados_pessoais.email}</Typography>
-          </div>
-        </div>
-      </CardContent>
-
-      <ExpandMore
-          sx={{position: 'absolute', top: '0', mt:'3px', right: '0', mr: '8px'}}
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-      </ExpandMore>
-
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent sx={{ borderTop: `1px solid ${dividerColor}`, whiteSpace: 'normal'}}>
-          <div className={styles.cardExtendContainer}>
-            <div className={styles.clientPersonalInformations}>
-              <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Dados pessoais: </Typography>
-              <Typography variant='subtitle1'>Nome: {dados_pessoais.nomeCompleto.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Typography>
-              <Typography variant='subtitle1'>E-mail: {dados_pessoais.cpf}</Typography>
-              <Typography variant='subtitle1'>Telefone 1: {dados_pessoais.telefone1}</Typography>
-              <Typography variant='subtitle1'>Telefone 2 (Opcional): {dados_pessoais.telefone2}</Typography>
-              <Typography variant='subtitle1'>Data de nascimento: {dados_pessoais.dataDeNascimento}</Typography>
-              <Typography variant='subtitle1'>CPF: {dados_pessoais.cpf}</Typography>
-              <Typography variant='subtitle1'>Renda mensal: {dados_pessoais.rendaMensal}</Typography>
+    <>
+      <Card sx={{position: 'relative', border: `1px solid ${dividerColor}`, mb: expanded ? '6px' : '-1px', boxShadow:'none'}} >
+        <CardContent sx={{display: 'flex', height: '45px', p: '0', pr: '52px'}}>
+          <Checkbox  sx={{ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
+          <div className={styles.customerParametersContainer}>
+            <div className={styles.nameContainer}>
+              <Typography variant='subtitle1'>{dados_pessoais.nomeCompleto.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Typography>
             </div>
-            
-            {endereços.map((endereço, index) => (
-              <div key={index}>
-                <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Endereço {index + 1} {index === 1 ? '(Opcional)' : ''}: </Typography>
-                <Typography variant='subtitle1'>CEP: {endereço.cep}</Typography>
-                <Typography variant='subtitle1'>Nome da Rua: {endereço.nomeDaRua}</Typography>
-                <Typography variant='subtitle1'>Número:{endereço.numero} </Typography>
-                <Typography variant='subtitle1'>Complemento: {endereço.complemento}</Typography>
-                <Typography variant='subtitle1'>Bairro: {endereço.bairro}</Typography>
-                <Typography variant='subtitle1'>Estado: {endereço.estado}</Typography>
-                <Typography variant='subtitle1'>Cidade: {endereço.cidade}</Typography>
-              </div>
-            ))}
-            <Fab color="primary" aria-label="edit" sx={{ height: '40px', width: '40px', position: 'absolute', bottom: '0', right: '0', mr: '15px' , mb: '15px'}}>
-              <EditIcon />
-            </Fab>
+            <div className={styles.cpfContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
+              <Typography variant='subtitle1'>{dados_pessoais.cpf}</Typography>
+            </div>
+            <div className={styles.telephoneContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
+              <Typography variant='subtitle1'>{dados_pessoais.telefone1}</Typography>
+            </div>
+            <div className={styles.locationContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
+              <Typography variant='subtitle1'>{endereços[0].estado}</Typography>
+            </div>
+            <div className={styles.emailContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
+              <Typography variant='subtitle1'>{dados_pessoais.email}</Typography>
+            </div>
           </div>
         </CardContent>
-      </Collapse>
-    </Card>
+
+        <ExpandMore
+            sx={{position: 'absolute', top: '0', mt:'3px', right: '0', mr: '8px'}}
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+        </ExpandMore>
+
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent sx={{ borderTop: `1px solid ${dividerColor}`, whiteSpace: 'normal'}}>
+            <div className={styles.cardExtendContainer}>
+              <div className={styles.clientPersonalInformations}>
+                <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Dados pessoais: </Typography>
+                <Typography variant='subtitle1'>Nome: {dados_pessoais.nomeCompleto.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Typography>
+                <Typography variant='subtitle1'>E-mail: {dados_pessoais.email}</Typography>
+                <Typography variant='subtitle1'>Telefone 1: {dados_pessoais.telefone1}</Typography>
+                <Typography variant='subtitle1'>Telefone 2 (Opcional): {dados_pessoais.telefone2}</Typography>
+                <Typography variant='subtitle1'>Data de nascimento: {dados_pessoais.dataDeNascimento}</Typography>
+                <Typography variant='subtitle1'>CPF: {dados_pessoais.cpf}</Typography>
+                <Typography variant='subtitle1'>Renda mensal: {dados_pessoais.rendaMensal}</Typography>
+              </div>
+              
+              {endereços.map((endereço, index) => (
+                <div key={index}>
+                  <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Endereço {index + 1} {index === 1 ? '(Opcional)' : ''}: </Typography>
+                  <Typography variant='subtitle1'>CEP: {endereço.cep}</Typography>
+                  <Typography variant='subtitle1'>Nome da Rua: {endereço.nomeDaRua}</Typography>
+                  <Typography variant='subtitle1'>Número:{endereço.numero} </Typography>
+                  <Typography variant='subtitle1'>Complemento: {endereço.complemento}</Typography>
+                  <Typography variant='subtitle1'>Bairro: {endereço.bairro}</Typography>
+                  <Typography variant='subtitle1'>Estado: {endereço.estado}</Typography>
+                  <Typography variant='subtitle1'>Cidade: {endereço.cidade}</Typography>
+                </div>
+              ))}
+              <Fab color="primary" aria-label="edit" sx={{ height: '40px', width: '40px', position: 'absolute', bottom: '0', right: '0', mr: '15px' , mb: '15px'}} onClick={handleClickOpenDialog}>
+                <EditIcon />
+              </Fab>
+            </div>
+          </CardContent>
+        </Collapse>
+      </Card>
+    
+      <div>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          sx={{zIndex: '9999999'}}
+        >
+        <DialogTitle>
+          {`Cliente #${dados_pessoais.cpf.replace(/[.-]/g, '')}`}
+        </DialogTitle>
+        <DialogContent>
+          <div>
+            <Typography variant='subtitle1' color='text.disabled'>Nome</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto} disabled/>
+            
+            <Typography variant='subtitle1' color='text.disabled'>Sobrenome</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto} disabled/>
+
+            <Typography variant='subtitle1'>E-mail</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Telefone 1</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Telefone 2</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Data de Nascimento</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+            
+            <Typography variant='subtitle1'>CPF</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Renda Mensal</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>CEP</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Nome da Rua</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Número</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Complemento</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+            
+            <Typography variant='subtitle1'>Bairro</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Estado</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+
+            <Typography variant='subtitle1'>Cidade</Typography> 
+            <TextField size="small" variant="outlined"fullWidth value={dados_pessoais.nomeCompleto}/>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Descartar Alterações</Button>
+          <Button onClick={handleCloseDialog} autoFocus>Salvar Alterações</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </>
   );
 })
-
-
-function EditClientDialog(){
-
-}
