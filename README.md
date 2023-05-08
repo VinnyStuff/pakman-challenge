@@ -23,6 +23,6 @@ To run the project on your local machine, follow these steps:
 `git clone https://github.com/VinnyStuff/pakman-challenge.git`
 2. Install the project dependencies:
 `npm install`
-Start the application:
+3. Start the application:
 `npm run dev`
 
