@@ -74,8 +74,6 @@
     align-items: center;
 }
 
-
-
 @media only screen and (max-width: 1280px) {
     .emailContainer{
         visibility: hidden;
@@ -100,6 +98,10 @@
     .telephoneContainer{
         visibility: visible;
     }
+    .listContainer{
+        margin-top: 70px;
+        margin-bottom: 80px;
+    }
 }
 @media only screen and (max-width: 705px) {
     .telephoneContainer{
@@ -116,6 +118,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    margin-right: 40px;
 }
 .cardExtendContainer div{
     min-width: 300px;

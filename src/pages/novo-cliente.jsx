@@ -25,7 +25,8 @@ export default function NewClient() {
       telefone2: '', /* opcional */
       dataDeNascimento: '',
       cpf: '',
-      rendaMensal: '', //colocar nome completo
+      rendaMensal: '',
+      nomeCompleto: '',
     },
     endereço_1:{
       cep: '',
@@ -58,6 +59,7 @@ export default function NewClient() {
         email: value.email,
         telefone1: value.telefone1,
         telefone2: value.telefone2,
+        nomeCompleto: value.nome + ' ' + value.sobrenome,
       }
     })
   }
@@ -132,7 +134,7 @@ export default function NewClient() {
           <div className={styles.form}>
             { formStepIndex < 3 ? (
               <>
-    {/*             <div style={{display: formStepIndex === 0 ? 'inherit' : 'none'}}>
+                <div style={{display: formStepIndex === 0 ? 'inherit' : 'none'}}>
                   <FormStep1 handleNextButtonPressed={handleNextButtonPressed} handleInputsValues={handleInputsValues}/>
                 </div>
 
@@ -142,10 +144,7 @@ export default function NewClient() {
 
                 <div style={{display: formStepIndex === 2 ? 'inherit' : 'none'}}>
                   <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/>
-                </div>  */}
-                <div>
-                  <FormStep3 handleNextButtonPressed={handleNextButtonPressed} handleBackButtonPressed={handleBackButtonPressed} handleInputsValues={handleInputsValues}/>
-                </div>
+                </div> 
               </>
             ) : 
               <>

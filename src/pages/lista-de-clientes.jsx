@@ -16,10 +16,10 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
-import InfoIcon from '@mui/icons-material/Info';
-import Tooltip from '@mui/material/Tooltip';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Fab from '@mui/material/Fab';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -72,7 +72,6 @@ export default function CustomerList() {
   const [searchInput, setSearchInput] = useState('');
   useEffect(() => {
     setClientsToShow(clients.filter(client => JSON.stringify(client).toLowerCase().includes(searchInput.toLowerCase())));
-    console.log(JSON.stringify(clients[0]));
   }, [searchInput]);
 
   //material
@@ -114,11 +113,6 @@ export default function CustomerList() {
                 <Button variant="outlined" color="primary" sx={{minWidth: '45px', mr: '5px'}} onClick={() => handleDeleteButton()}>
                   <DeleteIcon sx={{position: 'absolute', }}/>
                 </Button>
-                <Tooltip title="O botão de deletar apenas funciona quando possui algum cliente selecionado">
-                  <Button variant="text"  sx={{minWidth: '45px'}} disableRipple >
-                    <InfoIcon sx={{position: 'absolute'}}  color="action"/>
-                  </Button>
-                </Tooltip>
               </div>
               { clientsToShow.length > 0 ? (
                   <>
@@ -214,7 +208,7 @@ const Client = forwardRef(( props, ref ) => {
         <Checkbox  sx={{ml: '2px'}} inputProps={{ 'aria-label': 'controlled' }} checked={checked} onChange={handleCheckboxChange}/>
         <div className={styles.customerParametersContainer}>
           <div className={styles.nameContainer}>
-            <Typography variant='subtitle1'>{dados_pessoais.nome} {dados_pessoais.sobrenome}</Typography>
+            <Typography variant='subtitle1'>{dados_pessoais.nomeCompleto.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Typography>
           </div>
           <div className={styles.cpfContainer} style={{ borderLeft: `1px solid ${dividerColor}` }}>
             <Typography variant='subtitle1'>{dados_pessoais.cpf}</Typography>
@@ -246,7 +240,7 @@ const Client = forwardRef(( props, ref ) => {
           <div className={styles.cardExtendContainer}>
             <div className={styles.clientPersonalInformations}>
               <Typography variant='subtitle1' sx={{fontWeight: 'bold'}}>Dados pessoais: </Typography>
-              <Typography variant='subtitle1'>Nome: {dados_pessoais.nome} {dados_pessoais.sobrenome}</Typography>
+              <Typography variant='subtitle1'>Nome: {dados_pessoais.nomeCompleto.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Typography>
               <Typography variant='subtitle1'>E-mail: {dados_pessoais.cpf}</Typography>
               <Typography variant='subtitle1'>Telefone 1: {dados_pessoais.telefone1}</Typography>
               <Typography variant='subtitle1'>Telefone 2 (Opcional): {dados_pessoais.telefone2}</Typography>
@@ -267,9 +261,17 @@ const Client = forwardRef(( props, ref ) => {
                 <Typography variant='subtitle1'>Cidade: {endereço.cidade}</Typography>
               </div>
             ))}
+            <Fab color="primary" aria-label="edit" sx={{ height: '40px', width: '40px', position: 'absolute', bottom: '0', right: '0', mr: '15px' , mb: '15px'}}>
+              <EditIcon />
+            </Fab>
           </div>
         </CardContent>
       </Collapse>
     </Card>
   );
 })
+
+
+function EditClientDialog(){
+
+}
