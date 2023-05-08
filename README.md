@@ -10,6 +10,9 @@ The project consists of a client registration and management system, where the f
 * Delete a client
 * View the list of registered clients
 
+## Requirements
+* Git
+
 ## Technologies Used
 The project was developed using the following technologies:
 * React
