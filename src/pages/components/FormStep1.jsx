@@ -21,8 +21,6 @@ export default function FormStep1({handleNextButtonPressed, handleInputsValues})
     }
   }
 
-
-
   const [inputsValues, setTnputsValue] = useState({
     nome: '',
     sobrenome: '',
@@ -55,7 +53,13 @@ export default function FormStep1({handleNextButtonPressed, handleInputsValues})
   const [canClickNextButton, setCanClickNextButton] = useState(false);
 
   useEffect(() =>{ 
-    setCanClickNextButton(inputsValues.nome.length >= 3 && inputsValues.sobrenome.length >= 3 && validator.isEmail(inputsValues.email) && inputsValues.telefone1.length >= 15)
+    setCanClickNextButton(inputsValues.nome.length >= 3 && 
+      inputsValues.sobrenome.length >= 3 && 
+      validator.isEmail(inputsValues.email) && 
+      inputsValues.telefone1.length >= 15 &&
+      
+      (inputsValues.telefone2.length < 2 ||  inputsValues.telefone2.length >= 15)) 
+
   }, [inputsValues]);
 
   return (
@@ -130,7 +134,7 @@ export default function FormStep1({handleNextButtonPressed, handleInputsValues})
           </div>
           <div className={styles.inputs}>
             <Typography variant='subtitle1'>Outro telefone (opcional)</Typography>
-            <InputNumberMask mask="(99) 99999-9999" onChange={(e) =>  setTnputsValue({...inputsValues, telefone2: e.target.value})}/>
+            <InputNumberMask mask="(99) 99999-9999" id='telefone1' onChange={(e) =>  setTnputsValue({...inputsValues, telefone2: e.target.value})}/>
           </div>
         </div>
       </div>

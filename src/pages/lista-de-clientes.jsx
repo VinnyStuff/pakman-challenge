@@ -280,9 +280,9 @@ const Client = forwardRef(( props, ref ) => {
                   <Typography variant='subtitle1'>Cidade: {endereço.cidade}</Typography>
                 </div>
               ))}
-              <Fab color="primary" aria-label="edit" sx={{ height: '40px', width: '40px', position: 'absolute', bottom: '0', right: '0', mr: '15px' , mb: '15px'}} onClick={handleClickOpenDialog}>
+              {/* <Fab color="primary" aria-label="edit" sx={{ height: '40px', width: '40px', position: 'absolute', bottom: '0', right: '0', mr: '15px' , mb: '15px'}} onClick={handleClickOpenDialog}>
                 <EditIcon />
-              </Fab>
+              </Fab> */}
             </div>
           </CardContent>
         </Collapse>
