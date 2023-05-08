@@ -48,10 +48,13 @@ export default function SideBar() {
     //script
     const dispatch = useDispatch();
 
-    const [logo, setLogo] = useState('https://i.imgur.com/6P1sMC4.png');
+    const logoDarkMode = 'https://i.imgur.com/wc0ecnK.png'
+    const logoLightMode = 'https://i.imgur.com/6P1sMC4.png'
+
+    const [logo, setLogo] = useState(logoLightMode);
     const theme = useSelector(themeSelect);
     useEffect(() => {
-        setLogo(theme === 'dark'?  '/images/pakman-logo-dark-mode.png': '/images/pakman-logo-light-mode.png');
+        setLogo(theme === 'dark'?  logoDarkMode : logoLightMode);
     }, [theme]);
 
     const [currentTab, setCurrentTab] = useState(); //novo-cliente or lista-de-clientes

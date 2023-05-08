@@ -13,7 +13,7 @@ export default function Index() {
     <>
       <div className={styles.wrapper}>
         <Card className={styles.welcomeContainer}>
-          <img src='/images/pakman-vetor-logo.png' alt='logo' height={'100px'}/>
+          <img src='https://i.imgur.com/l9Vksoo.png' alt='logo' height={'100px'}/>
           <div className={styles.titleContainer}>
             <Typography variant="h3" color='text.primary' sx={{fontWeight: 'bold', mb: '8px'}}>Bem vindo!</Typography>
             <Typography variant="body1" color='text.secondary'>Bem-vindo à nossa plataforma de gerenciamento de clientes! Aqui, você pode acessar duas seções principais: "Novo Cliente" para adicionar informações de novos clientes e "Lista de Clientes" para monitorar seus dados. Aproveite!</Typography>
