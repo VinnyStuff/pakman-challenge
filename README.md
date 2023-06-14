@@ -14,6 +14,7 @@ More informations about the details: https://drive.google.com/file/d/15FG0h-ms7U
 
 ## Requirements
 * Git
+* Node.js
 
 ## Technologies Used
 The project was developed using the following technologies:
