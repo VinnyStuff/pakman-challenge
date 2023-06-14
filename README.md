@@ -10,6 +10,8 @@ The project consists of a client registration and management system, where the f
 * Delete a client
 * View the list of registered clients
 
+More informations about the details: https://drive.google.com/file/d/15FG0h-ms7UtB6uI0-UhqzDVDf2IEXXoY/view?usp=sharing
+
 ## Requirements
 * Git
 
